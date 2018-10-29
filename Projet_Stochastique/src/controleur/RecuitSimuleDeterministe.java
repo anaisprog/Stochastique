@@ -2,11 +2,16 @@ package controleur;
 
 public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 
-	public RecuitSimuleDeterministe(float a, float b, int c, float d) {
-		super(a, b, c, d);
-		// TODO Auto-generated constructor stub
+	
+	
+	public RecuitSimuleDeterministe() {
+		
 	}
 	
+	public RecuitSimuleDeterministe(int e, float t, int pallier, float coef, int meilleurCout) {
+		super(e, t, pallier, coef, meilleurCout);
+		
+	}
 	/*Cette fonction met à jour la température du recuit au fur et à mesure des itérations*/
 	public void majtemperature() {
 		

@@ -12,28 +12,27 @@ public class Sommet {
 	private float y;
 	//Cette variable sera vraie si le sommet a été visité
 	private boolean aEteVisite = false;
+	
 	//Constructeur
 	public Sommet(float x, float y) {
 		
 	}
+	
 	public Sommet() {
 		
 	}
+	
 	public float getx() {
 		return x;
 	}
+	
 	public float gety() {
 		return y;
 	}
+	
 	public boolean getaEteVisite() {
 		return aEteVisite;
 		
-	}
-	public Cout getCout() {
-		return null;
-	}
-	public float distanceTo(Sommet s) {
-		return 0;
 	}
 
 }

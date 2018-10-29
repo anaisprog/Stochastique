@@ -3,8 +3,8 @@ package controleur;
 import modele.ProgrammeLineaire;
 
 public class Solveur {
-	int algochoice; /*attribut permettant d’identifier quelle algorithme et
-	type de problème l’utilisateur souhaite résoudre*/
+	int algochoice; /*attribut permettant d'identifier quelle algorithme et
+	type de probl�me l’utilisateur souhaite r�soudre*/
 	
 	/*Constructeur de la classe Solver prenant
 	en paramètre un objet ProgrammeLineaire*/

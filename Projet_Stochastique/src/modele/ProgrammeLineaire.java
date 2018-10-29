@@ -2,26 +2,54 @@ package modele;
 import java.util.*;
 
 public class ProgrammeLineaire {
-	Matrice matriceContraintes; //matrice contenant les contraintes du problème
-	ArrayList<Matrice> iterations; /* Contient les différentes étapes du
-	système, depuis le système initial jusqu'au système résolu.*/
+	private Matrice matriceContraintes; 
+	private ArrayList<Matrice> iterations; 
 	
-	int nbIterations; // Nombre d’itérations effectuées.
-	double meilleureSolution; /*c’est la meilleure solution retenue après
-	avoir lancé l’algorithme*/
+	private int nbIterations; 
+	private double meilleureSolution; 
 	
-	boolean maximisation; /*booléen permettant de savoir s’il s’agit d’un problème
-	de maximisation ou de minimisation*/
-	ArrayList<Sommet> listeSommets; /*liste (ordonnée dans
-le sens du parcours) des sommets visités*/
+	private boolean maximisation; 
+	private Graph graph;
 	
 	
 	
-	/*Permet d’ajouter une contrainte au problème et donc une ligne de plus dans la matrice.*/
+	public ProgrammeLineaire() {
+		
+	}
+
+	public ProgrammeLineaire(Matrice matriceContraintes, ArrayList<Matrice> iterations, int nbIterations,
+			double meilleureSolution, boolean maximisation, Graph graph) {
+		this.matriceContraintes = matriceContraintes;
+		this.iterations = iterations;
+		this.nbIterations = nbIterations;
+		this.meilleureSolution = meilleureSolution;
+		this.maximisation = maximisation;
+		this.graph = graph;
+	}
+	
+	public int cout(){
+		int cout = 0;
+				
+		for(Arc a : this.graph.getArcs()){
+			cout += a.getMoyenne();
+		}
+		
+		return cout;
+	}
+	
+	public Graph getGraph() {
+		return graph;
+	}
+	
+	public void setGraph(Graph graph) {
+		this.graph = graph;
+	}
+	
+	/*Permet d'ajouter une contrainte au probl�me et donc une ligne de plus dans la matrice.*/
 	public void addContraintes(ArrayList<Double> ligne) {
 		
 	}
-	/*Permet d’ajouter la fonction objectif en prenant les contraintes*/
+	/*Permet d'ajouter la fonction objectif en prenant les contraintes*/
 	public void addFctObj(ArrayList<Double> ligne) {
 		
 	}
@@ -31,8 +59,7 @@ le sens du parcours) des sommets visités*/
 		return null;
 		
 	}
-	
-	
+		
 	public void addIteration() {
 	}
 	
@@ -40,18 +67,16 @@ le sens du parcours) des sommets visités*/
 	public int getColonnes() {
 		return 2;
 	}
+	
 	public double getMeilleureSolution() {
 		return meilleureSolution;
 	}
+	
 	public void setMeilleureSolution(double meilleureSolution) {
 		this.meilleureSolution = meilleureSolution;
 	}
-	public ArrayList<Sommet> getListeSommets() {
-		return listeSommets;
-	}
-	public void setListeSommets(ArrayList<Sommet> listeSommets) {
-		this.listeSommets = listeSommets;
-	}
+	
+	
 	
 	
 	
