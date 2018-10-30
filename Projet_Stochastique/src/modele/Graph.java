@@ -20,7 +20,7 @@ public class Graph {
 	public void setArcs(ArrayList<Arc> arcs) {
 		this.arcs = arcs;
 	}
-	
+
 	public void addArc(Arc a){
 		this.arcs.add(a);
 	}

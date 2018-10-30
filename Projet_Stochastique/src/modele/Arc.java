@@ -16,9 +16,9 @@ public class Arc {
 		this.variance = variance;
 	}
 	
-	/*Calcul la distance entre les deux sommets dans le cas ou elle n'est pas renseigné dans le fichier data*/
-	public float calculDistance() {
-		return 0;
+	/*Calcul la distance entre les deux sommets dans le cas ou elle n'est pas renseignï¿½ dans le fichier data*/
+	public double calculDistance() {
+		return Math.sqrt((this.somD.getx() - this.somA.getx()) * (this.somD.getx() - this.somA.gety()) + (this.somD.gety() - this.somA.gety()) * (this.somD.gety() - this.somA.gety()));
 	}
 	
 	public Sommet getSomD() {
