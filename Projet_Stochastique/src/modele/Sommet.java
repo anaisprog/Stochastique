@@ -25,6 +25,7 @@ public class Sommet {
 	public float getx() {
 		return x;
 	}
+	
 	/* Ajout d'une methode permettant de calculer la distance d'une ville vers une autre ville*/
 	public double distance(Sommet dest)
 	{

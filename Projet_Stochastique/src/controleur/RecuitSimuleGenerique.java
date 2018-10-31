@@ -1,5 +1,8 @@
 package controleur;
 
+import java.util.ArrayList;
+
+import modele.Arc;
 import modele.ProgrammeLineaire;
 
 public class RecuitSimuleGenerique {
@@ -26,23 +29,87 @@ public class RecuitSimuleGenerique {
 	public void run(ProgrammeLineaire prog){
 		int diff = 0;
 		int i = 0;
+		int newe = 0;
+		int compteur = 0;
+		float proba = 0;
+		
+		this.energie = prog.cout();
+		
+		
 		while(this.temperature >= 0.00005 && i < 5000){
-			//TODO : appliquer voisinage
-			//voisinage(prog)
+			//TODO : finir méthode voisinage
+			ProgrammeLineaire newprog = voisinage(prog);
+			newe = newprog.cout();
 			
-			//TODO : Calcul coût du scénario avec les arcs
+			diff = newe - this.energie;
+			
+			if(diff < 0){
+				compteur++;
+				if(compteur >= this.pallier){
+					this.temperature = (this.temperature * this.coef);
+					compteur = 0;
+				}
+					
+				this.energie = newe;
+				
+				if(newe < meilleurCout)
+					this.meilleurCout = newe;
+				
+			} else {
+				 proba = (float) Math.exp(-diff/this.temperature);
+					
+				if(Math.random() < proba){
+					compteur++;
+					if(compteur >= this.pallier){
+						this.temperature = (this.temperature * this.coef);
+						compteur = 0;
+					}
+						
+					this.energie = newe;
+					if(newe < meilleurCout)
+						this.meilleurCout = newe;
+				}	
+			}
 		}
 	}
 	
-	/*permet d'implémenter la mis à  jour la température 
-	 * recuit au fur et à mesure des itérations*/
-	public void majtemperature(){
-		
-	}
 	/* Cette fonction permet dâ€™implÃ©menter la mÃ©thode de
 	 * voisinageâ€‹ â€‹ qui sera utilisÃ© pour le recuit*/
-	public void voisinage(ProgrammeLineaire prog) {
+	public ProgrammeLineaire voisinage(ProgrammeLineaire prog) {
+		ProgrammeLineaire newprog = prog;
+		ArrayList<Arc> larcs = prog.getGraph().getArcs();
 		
+		int randD = 0;
+		int randF = 0;
+		int b = 0;
+		int r = 0;
+		boolean cond = false;
+		
+		while(!cond){
+			randD = (int)(Math.random() * ((larcs.size() - 1) + 1));
+			
+			do {
+                randF = (int)(Math.random() * ((larcs.size() - 1) + 1));
+			} while(randD == randF || Math.abs(randD - randF) > 10);
+			
+			if(randD > randF){
+                int temp = randD;
+                randD = randF;
+                randD = temp;
+			}
+			
+			/*TODO :for(int i = randD ; i < randF ; i++){
+				b = (Math.random() < 0.6) ? 0 : 1;
+                r = (int) (Math.random() * (4) + 1);
+                
+                if(b == 1){  
+                    larcs.get(i).setX(larcs.get(i).getX()+1);
+    			} else {
+                    stations.get(i).setX(stations.get(i).getX()-1);
+    			}
+			}*/
+		}
+		return newprog;
 	}
 	
 	/*Ensemble des Getters et Setters*/
