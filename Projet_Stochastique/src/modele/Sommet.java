@@ -5,7 +5,7 @@ public class Sommet {
 	//ID du sommet : chaque sommet aura un ID unique
 	private static int ID=1; /*Cette variable sera attribuée a chaque sommet créée
 	et incrémenté par la suite*/
-	private int id;
+	private int id; 
 	//Coordonnée horizontale
 	private float x;
 	//Coordonnée verticale
