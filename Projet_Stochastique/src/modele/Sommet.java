@@ -26,13 +26,6 @@ public class Sommet {
 		this.aEteVisite = false;
 	}
 	
-	
-	/* Ajout d'une methode permettant de calculer la distance d'une ville vers une autre ville*/
-	public double distance(Sommet dest)
-	{
-		return Math.sqrt((this.getx() - dest.getx()) * (this.getx() - dest.getx()) + (this.gety() - dest.gety()) * (this.gety() - dest.gety()));
-	}
-	
 	public int getid(){
 		return this.id;
 	}
