@@ -49,6 +49,7 @@ public class ProgrammeLineaire {
 	public void addContraintes(ArrayList<Double> ligne) {
 		
 	}
+	
 	/*Permet d'ajouter la fonction objectif en prenant les contraintes*/
 	public void addFctObj(ArrayList<Double> ligne) {
 		

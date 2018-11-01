@@ -5,6 +5,12 @@ public class Element {
 	int j; // num de colonne
 	double valeur; // valeur de l'element 
 	
+	public Element(int i, int j) {
+		this.i = i;
+		this.j = j;
+		
+	}
+
 	public int getI() {
 		return i;
 	}
@@ -17,7 +23,5 @@ public class Element {
 		return valeur;
 	}
 
-	public Element(int i, int j) {
-		
-	}
+	
 }

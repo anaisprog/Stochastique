@@ -15,15 +15,13 @@ public class Sommet {
 	
 	//Constructeur
 	public Sommet(float x, float y) {
-		
+		this.x = x;
+		this.y = y;
+		this.aEteVisite = false;
 	}
 	
 	public Sommet() {
 		
-	}
-	
-	public float getx() {
-		return x;
 	}
 	
 	/* Ajout d'une methode permettant de calculer la distance d'une ville vers une autre ville*/
@@ -32,15 +30,21 @@ public class Sommet {
 		return Math.sqrt((this.getx() - dest.getx()) * (this.getx() - dest.getx()) + (this.gety() - dest.gety()) * (this.gety() - dest.gety()));
 	}
 	
+	public float getx() {
+		return this.x;
+	}
 	
 	
 	public float gety() {
-		return y;
+		return this.y;
 	}
 	
 	public boolean getaEteVisite() {
-		return aEteVisite;
+		return this.aEteVisite;
 		
 	}
-
+	
+	public void setaEteVisite(boolean aEteVisite){
+		this.aEteVisite = aEteVisite;
+	}
 }
