@@ -7,6 +7,9 @@ public class Arc {
 	private float moyenne;
 	private float variance;
 	
+	public Arc(){
+		
+	}
 	
 	public Arc(Sommet somD, Sommet somA, float moyenne, float variance) {
 		super();
