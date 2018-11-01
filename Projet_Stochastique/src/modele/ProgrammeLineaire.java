@@ -12,7 +12,6 @@ public class ProgrammeLineaire {
 	private Graph graph;
 	
 	
-	
 	public ProgrammeLineaire() {
 		
 	}

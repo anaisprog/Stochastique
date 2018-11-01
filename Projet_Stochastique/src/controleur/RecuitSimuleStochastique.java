@@ -1,15 +1,20 @@
 package controleur;
-public class RecuitSimuleStochastique extends RecuitSimuleDeterministe {
-	float contrainteStochastique;
 
-	public void voisinage() {
+import modele.ProgrammeLineaire;
+
+public class RecuitSimuleStochastique extends RecuitSimuleDeterministe {
+
+	public RecuitSimuleStochastique() {
+		super();
+		
+	}
+
+	public RecuitSimuleStochastique(int e, float t, int pallier, float coef, int meilleurCout) {
+		super(e, t, pallier, coef, meilleurCout);
 		
 	}
 	
-	public void majtemperature() {
+	public void run(ProgrammeLineaire prog){
 		
 	}
-	
-	
-	
 }

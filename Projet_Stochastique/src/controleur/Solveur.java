@@ -26,10 +26,4 @@ public class Solveur {
 			 */
 		}
 	}
-	/*methode permettant d'adapter le programme
-	lin�aire fourni afin qu’ils puissent être traité avec le recuit simulé ou
-	CPLEX.*/
-	public void adapte(int choix) {
-		
-	}
 }

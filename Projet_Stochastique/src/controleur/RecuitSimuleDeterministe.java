@@ -63,7 +63,7 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		}
 	}
 	
-	/*Cette fonction exécute la méthode de voisinage​ , ​ par​ ​ défaut 2-opt*/
+	/*Cette fonction execute la m�thode de voisinage�ge , ​ par​ ​ défaut 2-opt*/
 	public ProgrammeLineaire voisinage(ProgrammeLineaire prog) {
 		ProgrammeLineaire newprog = prog;
 		ArrayList<Arc> larcs = prog.getGraph().getArcs();
