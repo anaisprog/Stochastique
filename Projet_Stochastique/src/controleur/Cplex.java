@@ -47,11 +47,6 @@ public class Cplex {
                     }
 				}
 			}
-			
-			IloNumVar[] u = new IloNumVar[lsommet.size()];
-	        for (int i = 2; i < lsommet.size(); i++) {
-	        	u[i] = model.numVar(0, Double.MAX_VALUE, "u." + i);
-	        }
 	        
 	            
 			/*Création de la fonction objectif et ajout au model*/
@@ -88,17 +83,13 @@ public class Cplex {
             }
             
             /*Contrainte de sous tours*/
-            for (int i = 2; i < lsommet.size(); i++) {
-                for (int j = 2; j < lsommet.size(); j++) {
-                     if (i!=j){
-                        IloLinearNumExpr expr = model.linearNumExpr();
-                        expr.addTerm(1, u[i]);
-                        expr.addTerm(-1, u[j]);
-                        expr.addTerm(lsommet.size() - 1, var[i][j]);
-                        model.addLe(expr, lsommet.size() - 2);
-                    }
-                }
-            }
+            /*TODO :
+             * Récupérer le IloNumVar contenant tout les chemins et recrée un Graph avec les arcs
+             * Ensuite partir de la première ville et parcourir les arcs jusqu'a retombé sur cette dernière.
+             * Si lorsqu'on retombe sur elle, on à parcouru le nombres de villes contenu dans le problème, 
+             * on a un chemin hamiltonien sinon on a un sous tours et on ajoute la contrainte à CPLEX
+             * avec toutes les villes parcourus.
+             */
 	
 			model.solve();
 		} catch (IloException e) {

@@ -19,6 +19,7 @@ public class Interface implements ActionListener{
 
 	private static JButton charger;
 	private static JButton start;
+	private static JButton stop;
 	
 	private static JFrame frame;
 	private static JPanel panel;
@@ -46,7 +47,7 @@ public class Interface implements ActionListener{
 		
 	    //Creation du menu 
 	    menu = new JPanel();
-		menu.setPreferredSize(new Dimension(400, 200));
+		menu.setPreferredSize(new Dimension(300, 500));
 		menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
 		
 	    
@@ -162,7 +163,8 @@ public class Interface implements ActionListener{
 		
 		start = new JButton("Lancer la résolution ");
         start.addActionListener(new ActionListener(){
-
+        
+        
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(algochoice == -1){
@@ -185,10 +187,22 @@ public class Interface implements ActionListener{
         	
         });
         
+        stop = new JButton("Arreter la résolution");
+        stop.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+        	
+        });
+        
 		JPanel choice = new JPanel();
 		choice.setLayout(new BoxLayout(choice, BoxLayout.X_AXIS));
 		
 		choice.add(start);
+		choice.add(stop);
 		menu.add(choice);
 		panel.add(menu, BorderLayout.WEST);
 		
