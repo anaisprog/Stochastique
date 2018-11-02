@@ -10,6 +10,11 @@ import java.awt.GridLayout;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 
+import controleur.ParserXMLFile;
+import controleur.Solveur;
+import modele.Graph;
+import modele.ProgrammeLineaire;
+
 public class Interface implements ActionListener{
 
 	private static JButton charger;
@@ -26,13 +31,17 @@ public class Interface implements ActionListener{
 	private static JRadioButton stochastique;
 	private static JRadioButton deterministe;
  	
+	int algochoice = -1;
+	int nature = -1;
+	private ProgrammeLineaire prog;
+	
 	public void createJFrame() {
 
 		System.out.println("Creation de l'interface graphique");
 
 		//Creation de la fenetre de resolution
 		frame = new JFrame("Resolution du TSP");
-	    frame.setPreferredSize(new Dimension(1000, 1000));
+	    frame.setPreferredSize(new Dimension(1000, 600));
 	    panel = new JPanel(new BorderLayout());
 		
 	    //Creation du menu 
@@ -46,24 +55,62 @@ public class Interface implements ActionListener{
 		Border borderDonnees = BorderFactory.createTitledBorder("Donnees");
 		firstBox.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(20, 0, 15, 0), borderDonnees));
         charger = new JButton("Charger fichier villes");
-        charger.addActionListener(this);
+        
+        charger.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser choix = new JFileChooser();
+				
+				int retour=choix.showOpenDialog(charger);
+				
+				if(retour==JFileChooser.APPROVE_OPTION){
+
+				   choix.getSelectedFile().getName();
+        
+				   String filename = choix.getSelectedFile().
+				          getAbsolutePath();
+				   
+				   ParserXMLFile parser = new ParserXMLFile();
+				   parser.parse(filename);
+				   /*TODO :
+				    * Graph graph = parser.parse(filename);
+				    * prog = new ProgrammeLineaire();
+				    * prog.setGraph(graph);
+				    */
+				   
+				}
+			}
+        	
+        });
+        
 		firstBox.add(charger);
 		Dimension dimension = new Dimension(250, 150);
 		firstBox.setMaximumSize(dimension);
 
-        
+		
 		//Radio Buttons pour les differents algo
-
 		JPanel algorithme = new JPanel(new GridLayout(0, 1));
-		Border border = BorderFactory.createTitledBorder("Choix Algorithme de rÃ©solution");
+		Border border = BorderFactory.createTitledBorder("Choix Algorithme de résolution");
 		algorithme.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0), border));
 
 
 		cplex = new JRadioButton("CPLEX");
 		recuitSimule = new JRadioButton("Recuit Simule");
 
-		cplex.addActionListener(this);
-		recuitSimule.addActionListener(this);
+		cplex.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				algochoice = 1;
+			}
+		});
+		
+		recuitSimule.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				algochoice = 0;
+			}
+		});
 		
 		ButtonGroup algo = new ButtonGroup();
 		
@@ -75,38 +122,68 @@ public class Interface implements ActionListener{
 		algorithme.setMaximumSize(dimension);
 		
 		
-
-		//Radio Buttons pour la rÃ©solution 
-		
+		//Radio Buttons pour le type du problème 
 		JPanel resolution = new JPanel(new GridLayout(5, 1));
-		Border border2 = BorderFactory.createTitledBorder("Choix type de rÃ©solution");
+		Border border2 = BorderFactory.createTitledBorder("Choix type de résolution");
 		resolution.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0), border2));
-
 
 		deterministe = new JRadioButton("Deterministe");
 		stochastique = new JRadioButton("Stochastique");
 
-		deterministe.addActionListener(this);
-		stochastique.addActionListener(this);
+		deterministe.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				nature = 0;
+			}
+		});
+		
+		stochastique.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				nature = 1;
+			}
+		});
 		
 		ButtonGroup resolutionbutton = new ButtonGroup();
 		
-		algo.add(deterministe);
-		algo.add(stochastique);
+		resolutionbutton.add(deterministe);
+		resolutionbutton.add(stochastique);
 
 		resolution.add(deterministe);
 		resolution.add(stochastique);	
 		resolution.setMaximumSize(dimension);
+
 		
 		/*Ajout des elements au menu */
-
 		menu.add(firstBox);
 		menu.add(algorithme);
 		menu.add(resolution);
 		menu.add(new JSeparator(JSeparator.HORIZONTAL));
 		
-		start = new JButton("Lancer la rÃ©solution ");
-        start.addActionListener(this);
+		start = new JButton("Lancer la résolution ");
+        start.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(algochoice == -1){
+					JOptionPane.showMessageDialog(panel, "Veuillez choisir l'algorithme de résolution", "Attention",
+					        JOptionPane.WARNING_MESSAGE);
+				}
+				
+				if(nature == -1){
+					JOptionPane.showMessageDialog(panel, "Veuillez choisir la nature du problème", "Attention",
+					        JOptionPane.WARNING_MESSAGE);
+				}
+				
+				if(prog == null){
+					JOptionPane.showMessageDialog(panel, "Aucun fichier de données chargé", "Attention",
+					        JOptionPane.WARNING_MESSAGE);
+				}
+				
+				Solveur solv = new Solveur(algochoice, nature, prog);
+			}
+        	
+        });
         
 		JPanel choice = new JPanel();
 		choice.setLayout(new BoxLayout(choice, BoxLayout.X_AXIS));
@@ -115,7 +192,6 @@ public class Interface implements ActionListener{
 		menu.add(choice);
 		panel.add(menu, BorderLayout.WEST);
 		
-	
 		frame.add(panel);
 		frame.pack();
 		frame.setVisible(true);

@@ -7,10 +7,12 @@ public class Solveur {
 	int nature; /*type de problème lâ€™utilisateur souhaite résoudre*/
 	ProgrammeLineaire prog;
 	
+	
 	/*Constructeur de la classe Solver prenant
 	en paramÃ¨tre un objet ProgrammeLineaire*/
-	public Solveur(int algochoice ,ProgrammeLineaire prog){
+	public Solveur(int algochoice ,int nature, ProgrammeLineaire prog){
 		this.algochoice = algochoice;
+		this.nature = nature;
 		this.prog = prog;
 	}
 	

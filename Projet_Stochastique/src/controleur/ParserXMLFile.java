@@ -19,9 +19,9 @@ public class ParserXMLFile {
 	private float coutEntreVilles[][][]; //Ville A - Ville B - Cout entre A et B
 
 	
-	
-	/*Fonction pour rÃ©aliser le parsing*/
-	void parse(String filename) {
+	//TODO : Renvoi un graph qui contient la liste des sommets.
+	/*Fonction pour réaliser le parsing*/
+	public void parse(String filename) {
 		try {
 			File fXmlFile = new File(filename);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -69,8 +69,6 @@ public class ParserXMLFile {
 					
 				}
 				
-				
-				
 				//}
 			}
 
@@ -81,11 +79,11 @@ public class ParserXMLFile {
 	}
 	
 	
-	/*Realisation des tests*/
+	/*Realisation des tests
 	public static void main(String[] args) {
-        ParserXMLFile px = new ParserXMLFile();
+        ParserXMLFile px = new ParserXMLFile();*/
         /*Exemple de lecture de fichier XML  chemin = "/home/an/eclipse-workspace/att48.xml"
-         */
+         
         px.parse("/home/an/eclipse-workspace/att48.xml");
-    }
+    }*/
 }
