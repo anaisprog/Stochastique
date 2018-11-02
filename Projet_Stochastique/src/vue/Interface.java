@@ -1,4 +1,4 @@
-package controleur;
+package vue;
 
 
 import java.awt.BorderLayout;
