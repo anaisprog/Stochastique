@@ -22,7 +22,6 @@ public class Cplex {
 		}
 	}
 
-
 	private void run(ProgrammeLineaire prog){
 		try {
 			
@@ -102,8 +101,6 @@ public class Cplex {
             }
 	
 			model.solve();
-			
-			
 		} catch (IloException e) {
 			e.printStackTrace();
 		}
