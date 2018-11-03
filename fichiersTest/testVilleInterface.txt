@@ -1,0 +1,42 @@
+	//Permet de tester l'affichage des villes
+
+	{
+		//Creation de sommet
+		
+		Sommet sommet1 = new Sommet(2.3f, 3.6f);
+		Sommet sommet2 = new Sommet(5.3f, 8.6f);
+		Sommet sommet3 = new Sommet(1.3f, 3.6f);
+		Sommet sommet4 = new Sommet(2.3f, 7.6f);
+		Sommet sommet5 = new Sommet(4.3f, 4.6f);
+		
+		Arc arc1 = new Arc(sommet1, sommet2, 3, 4);
+		Arc arc2 = new Arc(sommet4, sommet5, 3, 4);
+		
+		Graph leGraphe = new Graph();
+		
+		leGraphe.getSommets().add(sommet1);
+		leGraphe.getSommets().add(sommet2);
+		leGraphe.getSommets().add(sommet3);
+		leGraphe.getSommets().add(sommet4);
+		leGraphe.getSommets().add(sommet5);
+		
+		leGraphe.addArc(arc1);
+		leGraphe.addArc(arc2);
+		
+		System.out.println("Nombre de arc : "+leGraphe.getArcs().size());
+		JPanel fenetre = new JPanel();
+		JFrame frame = new JFrame();
+		
+		fenetre.setLayout(new BoxLayout(fenetre, BoxLayout.PAGE_AXIS));
+		frame.add(fenetre, BorderLayout.WEST);
+		
+		TestAffichageVille representation = new TestAffichageVille(leGraphe);
+		representation.setPreferredSize(new Dimension(500, 500));
+		
+		frame.add(representation, BorderLayout.EAST);
+		
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
+	}

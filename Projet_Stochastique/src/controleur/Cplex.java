@@ -11,18 +11,22 @@ import modele.Sommet;
 public class Cplex {
 	private IloCplex model;
 	private IloLinearNumExpr fct;
+	private boolean find;
 	private IloNumVar[][] var;
 	private double[][] cout;
 	
-	public Cplex() {
+	public Cplex() 
+	{
 		try {
 			this.model = new IloCplex();
 		} catch (IloException e) {
 			e.printStackTrace();
 		}
 	}
+	
 
-	private void run(ProgrammeLineaire prog){
+	private void run(ProgrammeLineaire prog)
+	{
 		try {
 			
 			ArrayList<Sommet> lsommet = prog.getGraph().getSommets();
@@ -54,7 +58,7 @@ public class Cplex {
 	        }
 	        
 	            
-			/*Création de la fonction objectif et ajout au model*/
+			/*Crï¿½ation de la fonction objectif et ajout au model*/
 	        this.fct = model.linearNumExpr();
             for (int i = 1; i < lsommet.size(); i++) {
                 for (int j = 1; j < lsommet.size(); j++) {
@@ -65,7 +69,7 @@ public class Cplex {
             }
             model.addMinimize(fct);
 			
-            /*Ajout de la première contrainte de parcour*/
+            /*Ajout de la premiï¿½re contrainte de parcour*/
             for (int j = 1; j < lsommet.size(); j++) {
                 IloLinearNumExpr expr = model.linearNumExpr();
                 for (int i = 1; i < lsommet.size(); i++) {

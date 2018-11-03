@@ -39,6 +39,15 @@ public class Sommet {
 		return this.y;
 	}
 	
+
+	public void setx(float x) {
+		this.x = x;
+	}
+
+	public void sety(float y) {
+		this.y = y;
+	}
+
 	public boolean getaEteVisite() {
 		return this.aEteVisite;
 		
