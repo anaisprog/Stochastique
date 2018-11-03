@@ -13,9 +13,9 @@ public class Arc {
 	}
 	
 	public Arc(Sommet somD, Sommet somA, double cout, float moyenne, float variance) {
-		super();
 		this.somD = somD;
 		this.somA = somA;
+		this.cout = cout;
 		this.moyenne = moyenne;
 		this.variance = variance;
 	}

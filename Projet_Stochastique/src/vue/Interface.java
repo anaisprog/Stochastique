@@ -80,7 +80,7 @@ public class Interface implements ActionListener{
 				   } else {
 					   JOptionPane.showMessageDialog(panel, "Format de fichier non valide", "Attention",
 						        JOptionPane.WARNING_MESSAGE);
-				   } 
+				   }
 				}
 			}
         	

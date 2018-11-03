@@ -46,4 +46,34 @@ public class Graph {
 		
 		return null;
 	}
+	
+	public Arc getArcbySommetD(int idD){
+		for(Arc a : arcs){
+			if(a.getSomD().getid() == idD){
+				return a;
+			}
+		}
+		
+		return null;
+	}
+	
+	public Arc getArcbySommetA(int idA){
+		for(Arc a : arcs){
+			if(a.getSomA().getid() == idA){
+				return a;
+			}
+		}
+		
+		return null;
+	}
+	
+	public Arc getArcbyDA(int idD, int idA){
+		for(Arc a : arcs){
+			if((a.getSomD().getid() == idD) && (a.getSomA().getid() == idA)){
+				return a;
+			}
+		}
+		
+		return null;
+	}
 }
