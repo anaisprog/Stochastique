@@ -4,7 +4,7 @@ public class Arc {
 	private Sommet somD;
 	private Sommet somA;
 	
-	private float cout;
+	private double cout;
 	private float moyenne;
 	private float variance;
 	
@@ -12,7 +12,7 @@ public class Arc {
 		
 	}
 	
-	public Arc(Sommet somD, Sommet somA, float cout, float moyenne, float variance) {
+	public Arc(Sommet somD, Sommet somA, double cout, float moyenne, float variance) {
 		super();
 		this.somD = somD;
 		this.somA = somA;
@@ -20,7 +20,7 @@ public class Arc {
 		this.variance = variance;
 	}
 	
-	/*Calcul la distance entre les deux sommets dans le cas ou elle n'est pas renseignï¿½ dans le fichier data*/
+	/*Calcul la distance entre les deux sommets dans le cas ou elle n'est pas renseigné dans le fichier data*/
 	public double calculDistance() {
 		return Math.sqrt((this.somD.getx() - this.somA.getx()) * (this.somD.getx() - this.somA.gety()) + (this.somD.gety() - this.somA.gety()) * (this.somD.gety() - this.somA.gety()));
 	}
@@ -28,7 +28,6 @@ public class Arc {
 	public Sommet getSomD() {
 		return somD;
 	}
-
 
 	public void setSomD(Sommet somD) {
 		this.somD = somD;
@@ -45,11 +44,11 @@ public class Arc {
 	}
 
 	
-	public float getCout() {
+	public double getCout() {
 		return cout;
 	}
 
-	public void setCout(float cout) {
+	public void setCout(double cout) {
 		this.cout = cout;
 	}
 
@@ -71,6 +70,4 @@ public class Arc {
 	public void setVariance(float variance) {
 		this.variance = variance;
 	}
-	
-	
 }

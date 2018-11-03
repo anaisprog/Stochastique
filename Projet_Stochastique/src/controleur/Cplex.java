@@ -28,8 +28,13 @@ public class Cplex {
 			try {
 				
 				ArrayList<Sommet> lsommet = prog.getGraph().getSommets();
+				ArrayList<Arc> larc = prog.getGraph().getArcs();
 				this.var = new IloNumVar[lsommet.size()][lsommet.size()];
 				this.cout = new double[lsommet.size()][lsommet.size()];
+				
+				for(Arc a : larc){
+					cout[a.getSomD().getid()][a.getSomA().getid()] = a.getCout();
+				}
 				
 				/*Ajout des variables des chemins au model*/
 				for(int i = 1; i <= lsommet.size(); i++){
@@ -76,13 +81,15 @@ public class Cplex {
 	           
 				if(model.solve()){
 					Graph newsoluce = new Graph();
+					newsoluce.setSommets(lsommet);
 					for (int i = 1; i <= lsommet.size(); i++){
 						for(int j = 1; j <= lsommet.size(); j++){
 							if(i != j){
 								if(model.getValue(var[i][j]) == 1){
 									Sommet si = prog.getGraph().getSommetById(i);
 									Sommet sj = prog.getGraph().getSommetById(j);
-									Arc a = new Arc();
+									Arc a = new Arc(si, sj, cout[i][j], 0,0);
+									newsoluce.addArc(a);
 								}
 							}
 						}

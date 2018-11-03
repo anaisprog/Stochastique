@@ -25,7 +25,6 @@ public class Solveur {
 		} else {
 			Cplex cplex = new Cplex();
 			cplex.run(prog, nature);
-			 
 		}
 	}
 }
