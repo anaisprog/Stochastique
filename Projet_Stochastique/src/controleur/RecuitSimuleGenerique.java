@@ -1,6 +1,9 @@
 package controleur;
 
+import modele.Arc;
+import modele.Graph;
 import modele.ProgrammeLineaire;
+import modele.Sommet;
 
 public class RecuitSimuleGenerique {
 	protected int energie = 0;
@@ -21,8 +24,21 @@ public class RecuitSimuleGenerique {
 		this.coef = coef;
 		this.meilleurCout = meilleurCout;
 	}
+	
+	public Graph generationSolutionInitiale(Graph g)
+	{
+		Graph graphSolution=new Graph();
+		//On boucle sur l'ensemble des sommets du graph initial
+		for(int i=0; i<g.getArcs().size(); i++)
+		{	
+			Arc a=new Arc(g.getSommetById(i), g.getSommetById(i+1),0.d,0.f,0.f);
+			graphSolution.addArc(a);
+		}
+		return graphSolution;	
+	}
+	
 
-	/*Lance le calcul de la solution avec l'algorithme du recuit simulé*/
+	/*Lance le calcul de la solution avec l'algorithme du recuit simulï¿½*/
 	public void run(ProgrammeLineaire prog, int nature){
 		if(nature == 0){
 			RecuitSimuleDeterministe rsd = new RecuitSimuleDeterministe();
