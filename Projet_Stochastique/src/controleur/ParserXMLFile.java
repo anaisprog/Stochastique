@@ -60,7 +60,6 @@ public class ParserXMLFile {
 					// System.out.println("villeActuelle" + villeActuelle);
 					Node nNode = nListEdge.item(temp + k);
 					
-					System.out.println("K : " + k);
 					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 						Element eElement = (Element) nNode;
 						int numSommetA = Integer.parseInt(eElement.getTextContent());

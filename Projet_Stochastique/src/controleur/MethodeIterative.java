@@ -14,39 +14,73 @@ import modele.Sommet;
 public class MethodeIterative {
 	private ProgrammeLineaire prog;
 	private int nature;
-	
-	
+
 	public MethodeIterative(ProgrammeLineaire prog, int nature) {
 		this.prog = prog;
-		this.nature = nature; 
+		this.nature = nature;
 	}
 
-
 	public void run() {
-		if(nature == 0){
+		if (nature == 0) {
 			Cplex cplex = new Cplex();
 			cplex.createModel(prog, nature);
 			cplex.solve();
-			boolean st = contrainteSousTour(cplex);
 			
-			if(st){
+			/*
+			ArrayList<Sommet> lsommet = prog.getGraph().getSommets();
+			IloCplex model = cplex.getModel();
+			IloNumVar[][] var = cplex.getVar();
+			double[][] cout = cplex.getCout();
+			
+			Graph newsoluce = new Graph();
+			newsoluce.setSommets(lsommet);
+			for (int i = 1; i <= lsommet.size(); i++) {
+				for (int j = 1; j <= lsommet.size(); j++) {
+					if (i != j) {
+						try {
+							if (model.getValue(var[i][j]) == 1) {
+								Sommet si = prog.getGraph().getSommetById(i);
+								Sommet sj = prog.getGraph().getSommetById(j);
+								Arc a = new Arc(si, sj, cout[i][j], 0, 0);
+								newsoluce.addArc(a);
+							}
+						} catch (UnknownObjectException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IloException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+			
+			for(Arc a : newsoluce.getArcs()){
+				System.out.println("Arc entre " + a.getSomD().getid() + " et " + a.getSomA().getid()
+						+ " | cout = " + a.getCout());
+			}
+			*/
+			
+			boolean st = contrainteSousTour(cplex);
+
+			if (st) {
 				System.out.println("La solution trouvé contient des sous tours");
 				System.out.println("Contrainte de sous tours ajouté au model");
 				cplex.solve();
 			}
 		} else {
-			
+
 		}
-		
+
 	}
-	
-	public boolean contrainteSousTour(Cplex cplex){
+
+	public boolean contrainteSousTour(Cplex cplex) {
 		ArrayList<Sommet> lsommet = prog.getGraph().getSommets();
 		IloCplex model = cplex.getModel();
 		IloNumVar[][] var = cplex.getVar();
 		double[][] cout = cplex.getCout();
 		boolean st = false;
-		
+
 		try {
 			if (model.solve()) {
 				Graph newsoluce = new Graph();
@@ -86,13 +120,16 @@ public class MethodeIterative {
 						} while (so.getid() != s.getid());
 
 						if (listeparcour.size() != lsommet.size()) {
-							System.out.println("Sous-tour détecté");
+							// System.out.println("Sous-tour détecté");
 							st = true;
-							
-							/* TODO :
-							 * Ajout des contraintes au model (cplex.setModel(model));
+
+							/*
+							 * TODO : Ajout des contraintes au model
+							 * (cplex.setModel(model));
 							 * 
 							 */
+
+							listeparcour.clear();
 						}
 					}
 				}
@@ -104,7 +141,7 @@ public class MethodeIterative {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return st;
 	}
 }
