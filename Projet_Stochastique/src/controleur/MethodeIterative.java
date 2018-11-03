@@ -64,8 +64,7 @@ public class MethodeIterative {
 			boolean st = contrainteSousTour(cplex);
 
 			if (st) {
-				System.out.println("La solution trouvé contient des sous tours");
-				System.out.println("Contrainte de sous tours ajouté au model");
+				System.out.println("Contrainte de sous-tours ajouté au model");
 				cplex.solve();
 			}
 		} else {
@@ -80,7 +79,8 @@ public class MethodeIterative {
 		IloNumVar[][] var = cplex.getVar();
 		double[][] cout = cplex.getCout();
 		boolean st = false;
-
+		int nbst = 0;
+		
 		try {
 			if (model.solve()) {
 				Graph newsoluce = new Graph();
@@ -100,16 +100,18 @@ public class MethodeIterative {
 
 				ArrayList<Integer> alreadytreated = new ArrayList<>();
 				for (Sommet s : lsommet) {
-					if (!alreadytreated.contains(s.getid())) {
+					
+					if (!contain(alreadytreated, s.getid())) {
 						ArrayList<Integer> listeparcour = new ArrayList<>();
-
+						
 						listeparcour.add(s.getid());
 						alreadytreated.add(s.getid());
-
 						Arc ad = newsoluce.getArcbySommetD(s.getid());
-						listeparcour.add(ad.getSomA().getid());
-
 						Sommet so = ad.getSomA();
+						
+						listeparcour.add(so.getid());
+						alreadytreated.add(so.getid());
+						
 
 						do {
 							ad = newsoluce.getArcbySommetD(so.getid());
@@ -119,10 +121,11 @@ public class MethodeIterative {
 							alreadytreated.add(so.getid());
 						} while (so.getid() != s.getid());
 
-						if (listeparcour.size() != lsommet.size()) {
-							// System.out.println("Sous-tour détecté");
+						if ((listeparcour.size()-1) != lsommet.size()) {
+							nbst++;
 							st = true;
-
+							System.out.println(listeparcour);
+							
 							/*
 							 * TODO : Ajout des contraintes au model
 							 * (cplex.setModel(model));
@@ -133,6 +136,8 @@ public class MethodeIterative {
 						}
 					}
 				}
+
+				System.out.println( nbst + " sous-tours détecté");
 			}
 		} catch (UnknownObjectException e) {
 			// TODO Auto-generated catch block
@@ -143,5 +148,16 @@ public class MethodeIterative {
 		}
 
 		return st;
+	}
+	
+	private boolean contain(ArrayList<Integer> lint, int id){
+		for(Integer i : lint){
+			if(id == i.intValue()){
+				
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }
