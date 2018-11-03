@@ -1,5 +1,7 @@
 package controleur;
 
+import java.util.ArrayList;
+
 import modele.Arc;
 import modele.Graph;
 import modele.ProgrammeLineaire;
@@ -25,17 +27,43 @@ public class RecuitSimuleGenerique {
 		this.meilleurCout = meilleurCout;
 	}
 	
+	
+	// Fonction d'obtention d'un cycle initial
+	
+	
 	public Graph generationSolutionInitiale(Graph g)
 	{
 		Graph graphSolution=new Graph();
-		//On boucle sur l'ensemble des sommets du graph initial
-		for(int i=0; i<g.getArcs().size(); i++)
-		{	
-			Arc a=new Arc(g.getSommetById(i), g.getSommetById(i+1),0.d,0.f,0.f);
+		ArrayList<Sommet> lsommet = g.getSommets();
+		
+		for(Sommet s : lsommet) {
+			Sommet sa;
+			if(s.getid() == lsommet.size()) {
+				sa = g.getSommetById(1);
+			} else {
+				sa = g.getSommetById(s.getid()+1);
+			}
+			
+			double cout = g.getArcbyDA(s.getid(), sa.getid()).getCout();
+			Arc a = new Arc(s, sa, cout, 0, 0);
+			
 			graphSolution.addArc(a);
 		}
+		/*//On boucle sur l'ensemble des sommets du graph initial
+		for(int i=1; i<=g.getSommets().size(); i++)
+		{	
+			
+			a=new Arc(g.getSommetById(i), g.getSommetById(i+1),g.getArcbyDA(i, i+1).getCout(),0.f,0.f);
+			
+			graphSolution.addArc(a);
+		}*/
 		return graphSolution;	
 	}
+	
+	
+	
+	
+	
 	
 
 	/*Lance le calcul de la solution avec l'algorithme du recuit simul�*/

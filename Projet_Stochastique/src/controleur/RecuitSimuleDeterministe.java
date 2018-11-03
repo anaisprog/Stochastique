@@ -3,7 +3,9 @@ package controleur;
 import java.util.ArrayList;
 
 import modele.Arc;
+import modele.Graph;
 import modele.ProgrammeLineaire;
+import modele.Sommet;
 
 public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 
@@ -23,14 +25,13 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		int compteur = 0;
 		float proba = 0;
 		
-		this.energie = prog.cout();
+		this.energie = super.generationSolutionInitiale(prog.getGraph()).cout();
 		
 		
 		while(this.temperature >= 0.00005 && i < 5000){
-			//TODO : finir m�thode voisinage
-			ProgrammeLineaire newprog = voisinage(prog);
-			newe = newprog.cout();
-			
+			//TODO : finir m�thode voisinage
+			Graph newsoluce = voisinage(super.generationSolutionInitiale(prog.getGraph()));
+			newe = newsoluce.cout();
 			diff = newe - this.energie;
 			
 			if(diff < 0){
@@ -63,41 +64,68 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		}
 	}
 	
-	/*Cette fonction execute la m�thode de voisinage�ge , ​ par​ ​ défaut 2-opt*/
-	public ProgrammeLineaire voisinage(ProgrammeLineaire prog) {
-		ProgrammeLineaire newprog = prog;
-		ArrayList<Arc> larcs = prog.getGraph().getArcs();
-		
-		int randD = 0;
-		int randF = 0;
-		int b = 0;
-		int r = 0;
-		boolean cond = false;
-		
-		while(!cond){
-			randD = (int)(Math.random() * ((larcs.size() - 1) + 1));
-			
-			do {
-                randF = (int)(Math.random() * ((larcs.size() - 1) + 1));
-			} while(randD == randF || Math.abs(randD - randF) > 10);
-			
-			if(randD > randF){
-                int temp = randD;
-                randD = randF;
-                randD = temp;
+	/*Cette fonction execute la m�thode de voisinage�ge , ​ par​ ​ défaut 2-opt*/
+	public Graph voisinage(Graph graph) {
+		Graph solution=graph;
+		ArrayList<Arc> larcs = graph.getArcs();
+	
+		boolean ammelioration = true;
+		double distance_i_ip1=0;
+		double distance_j_jp1=0;
+		double distance_i_j=0;
+		double distance_ip1_jp1=0;
+		while(ammelioration==true) {
+			ammelioration=false;
+			for(int i=0; i<graph.getSommets().size(); i++) {
+				for(int j=0; j<graph.getSommets().size(); j++) {
+					if(i==0 ) { //On a pas de i-1
+						if(i!=j && j!=i+1 ) { //On verifie les conditions de l'algorithme
+							distance_i_ip1 = graph.getArcbyDA(i, i+1).getCout();
+							distance_j_jp1 = graph.getArcbyDA(i, i+1).getCout();
+							distance_i_j =  graph.getArcbyDA(i, j).getCout();
+							distance_ip1_jp1 = graph.getArcbyDA(i+1, j+1).getCout();
+						//	Si distance(xi, xi+1) + distance(xj, xj+1) > distance(xi, xj) + distance(xi+1, xj+1) alors
+							
+							if((distance_i_ip1 + distance_j_jp1 ) > (distance_i_j + distance_ip1_jp1)) {
+								Sommet sip1 = solution.getSommetById(i+1);
+								Sommet sj = solution.getSommetById(j);
+								
+								Arc a1 = solution.getArcbyDA(i, i+1);
+								Arc a2 = solution.getArcbyDA(j, j+1);
+								
+								a1.setSomA(sj);
+								a2.setSomD(sip1);
+							}
+								
+							}
+						}
+						else {
+							
+							if(i!=j && j!=i+1 && j!=i-1) { //On verifie les conditions de l'algorithme
+								distance_i_ip1 = graph.getArcbyDA(i, i+1).getCout();
+								distance_j_jp1 = graph.getArcbyDA(i, i+1).getCout();
+								distance_i_j =  graph.getArcbyDA(i, j).getCout();
+								distance_ip1_jp1 = graph.getArcbyDA(i+1, j+1).getCout();
+							
+						}
+							if((distance_i_ip1 + distance_j_jp1 ) > (distance_i_j + distance_ip1_jp1)) {
+								Sommet sip1 = solution.getSommetById(i+1);
+								Sommet sj = solution.getSommetById(j);
+								
+								Arc a1 = solution.getArcbyDA(i, i+1);
+								Arc a2 = solution.getArcbyDA(j, j+1);
+								
+								a1.setSomA(sj);
+								a2.setSomD(sip1);
+							}
+					}
+					
+					
+				}
 			}
-			
-			/*TODO :for(int i = randD ; i < randF ; i++){
-				b = (Math.random() < 0.6) ? 0 : 1;
-                r = (int) (Math.random() * (4) + 1);
-                
-                if(b == 1){  
-                    larcs.get(i).setX(larcs.get(i).getX()+1);
-    			} else {
-                    stations.get(i).setX(stations.get(i).getX()-1);
-    			}
-			}*/
 		}
-		return newprog;
+			
+		return solution;
 	}
+	
 }
