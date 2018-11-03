@@ -59,12 +59,7 @@ public class RecuitSimuleGenerique {
 		}*/
 		return graphSolution;	
 	}
-	
-	
-	
-	
-	
-	
+
 
 	/*Lance le calcul de la solution avec l'algorithme du recuit simul�*/
 	public void run(ProgrammeLineaire prog, int nature){

@@ -24,15 +24,18 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		int newe = 0;
 		int compteur = 0;
 		float proba = 0;
+		Graph solutionactuelle = super.generationSolutionInitiale(prog.getGraph());
 		
-		this.energie = super.generationSolutionInitiale(prog.getGraph()).cout();
+		this.energie = solutionactuelle.cout();
 		
+		System.out.println(energie);
 		
 		while(this.temperature >= 0.00005 && i < 5000){
-			//TODO : finir m�thode voisinage
-			Graph newsoluce = voisinage(super.generationSolutionInitiale(prog.getGraph()));
+			Graph newsoluce = voisinage(solutionactuelle);
 			newe = newsoluce.cout();
 			diff = newe - this.energie;
+			System.out.println("CoutActuelle : " + energie);
+			System.out.println("CoutVoisinage : " + newe);
 			
 			if(diff < 0){
 				compteur++;
@@ -40,11 +43,13 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 					this.temperature = (this.temperature * this.coef);
 					compteur = 0;
 				}
-					
+				
+				solutionactuelle = newsoluce;
 				this.energie = newe;
 				
 				if(newe < meilleurCout)
 					this.meilleurCout = newe;
+				
 				
 			} else {
 				 proba = (float) Math.exp(-diff/this.temperature);
@@ -55,8 +60,10 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 						this.temperature = (this.temperature * this.coef);
 						compteur = 0;
 					}
-						
+					
+					solutionactuelle = newsoluce;
 					this.energie = newe;
+					
 					if(newe < meilleurCout)
 						this.meilleurCout = newe;
 				}	
