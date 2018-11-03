@@ -26,15 +26,7 @@ public class ProgrammeLineaire {
 		this.graph = graph;
 	}
 	
-	public int cout(){
-		int cout = 0;
-				
-		for(Arc a : this.graph.getArcs()){
-			cout += a.getMoyenne();
-		}
-		
-		return cout;
-	}
+	
 	
 	public Graph getGraph() {
 		return graph;
@@ -44,7 +36,7 @@ public class ProgrammeLineaire {
 		this.graph = graph;
 	}
 	
-	/*Permet d'ajouter une contrainte au problème et donc une ligne de plus dans la matrice.*/
+	/*Permet d'ajouter une contrainte au problï¿½me et donc une ligne de plus dans la matrice.*/
 	public void addContraintes(ArrayList<Double> ligne) {
 		
 	}

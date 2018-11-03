@@ -76,4 +76,14 @@ public class Graph {
 		
 		return null;
 	}
+	
+	public int cout(){
+		int cout = 0;
+				
+		for(Arc a : arcs){
+			cout += a.getMoyenne();
+		}
+		
+		return cout;
+	}
 }
