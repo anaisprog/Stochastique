@@ -23,8 +23,8 @@ public class Solveur {
 			RecuitSimuleGenerique rsg = new RecuitSimuleGenerique();
 			rsg.run(prog, nature);
 		} else {
-			Cplex cplex = new Cplex();
-			cplex.run(prog, nature);
+			MethodeIterative mi = new MethodeIterative(prog, nature);
+			mi.run();
 		}
 	}
 }
