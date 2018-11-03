@@ -19,7 +19,6 @@ public class ParserXMLFile {
 	private static int nombreVilles;
 	private Graph g;
 
-	
 	/* Fonction pour réaliser le parsing, renvoie un graph qui contient la liste des sommets. */
 	public Graph parse(String filename) {
 		try {
@@ -64,10 +63,7 @@ public class ParserXMLFile {
 						/*System.out.println("Arc entre " + a.getSomD().getid() + " et " + a.getSomA().getid()
 								+ " | cout = " + a.getCout());*/
 						g.addArc(a);
-
-						
 					}
-
 				}
 				k += nbedgepervertex;
 			}
@@ -77,15 +73,4 @@ public class ParserXMLFile {
 
 		return g;
 	}
-
-	/*
-	 * Realisation des tests public static void main(String[] args) {
-	 * ParserXMLFile px = new ParserXMLFile();
-	 */
-	/*
-	 * Exemple de lecture de fichier XML chemin =
-	 * "/home/an/eclipse-workspace/att48.xml"
-	 * 
-	 * px.parse("/home/an/eclipse-workspace/att48.xml"); }
-	 */
 }
