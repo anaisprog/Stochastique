@@ -24,18 +24,15 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		int newe = 0;
 		int compteur = 0;
 		float proba = 0;
-		Graph solutionactuelle = super.generationSolutionInitiale(prog.getGraph());
 		
-		this.energie = solutionactuelle.cout();
+		this.energie = super.generationSolutionInitiale(prog.getGraph()).cout();
 		
-		System.out.println(energie);
 		
 		while(this.temperature >= 0.00005 && i < 5000){
-			Graph newsoluce = voisinage(solutionactuelle);
+			//TODO : finir m�thode voisinage
+			Graph newsoluce = voisinage(super.generationSolutionInitiale(prog.getGraph()));
 			newe = newsoluce.cout();
 			diff = newe - this.energie;
-			System.out.println("CoutActuelle : " + energie);
-			System.out.println("CoutVoisinage : " + newe);
 			
 			if(diff < 0){
 				compteur++;
@@ -43,13 +40,11 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 					this.temperature = (this.temperature * this.coef);
 					compteur = 0;
 				}
-				
-				solutionactuelle = newsoluce;
+					
 				this.energie = newe;
 				
 				if(newe < meilleurCout)
 					this.meilleurCout = newe;
-				
 				
 			} else {
 				 proba = (float) Math.exp(-diff/this.temperature);
@@ -60,10 +55,8 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 						this.temperature = (this.temperature * this.coef);
 						compteur = 0;
 					}
-					
-					solutionactuelle = newsoluce;
+						
 					this.energie = newe;
-					
 					if(newe < meilleurCout)
 						this.meilleurCout = newe;
 				}	
@@ -81,54 +74,25 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		double distance_j_jp1=0;
 		double distance_i_j=0;
 		double distance_ip1_jp1=0;
+		ArrayList<Sommet> lsommets = solution.getSommets();
 		while(ammelioration==true) {
 			ammelioration=false;
-			for(int i=0; i<graph.getSommets().size(); i++) {
-				for(int j=0; j<graph.getSommets().size(); j++) {
-					if(i==0 ) { //On a pas de i-1
-						if(i!=j && j!=i+1 ) { //On verifie les conditions de l'algorithme
-							distance_i_ip1 = graph.getArcbyDA(i, i+1).getCout();
-							distance_j_jp1 = graph.getArcbyDA(i, i+1).getCout();
-							distance_i_j =  graph.getArcbyDA(i, j).getCout();
-							distance_ip1_jp1 = graph.getArcbyDA(i+1, j+1).getCout();
-						//	Si distance(xi, xi+1) + distance(xj, xj+1) > distance(xi, xj) + distance(xi+1, xj+1) alors
-							
-							if((distance_i_ip1 + distance_j_jp1 ) > (distance_i_j + distance_ip1_jp1)) {
-								Sommet sip1 = solution.getSommetById(i+1);
-								Sommet sj = solution.getSommetById(j);
-								
-								Arc a1 = solution.getArcbyDA(i, i+1);
-								Arc a2 = solution.getArcbyDA(j, j+1);
-								
-								a1.setSomA(sj);
-								a2.setSomD(sip1);
-							}
-								
-							}
-						}
-						else {
-							
-							if(i!=j && j!=i+1 && j!=i-1) { //On verifie les conditions de l'algorithme
-								distance_i_ip1 = graph.getArcbyDA(i, i+1).getCout();
-								distance_j_jp1 = graph.getArcbyDA(i, i+1).getCout();
-								distance_i_j =  graph.getArcbyDA(i, j).getCout();
-								distance_ip1_jp1 = graph.getArcbyDA(i+1, j+1).getCout();
+			for(Sommet s:lsommets)
+			{	
+				Arc ai= solution.getArcbySommetD(s.getid());
+				Arc aim = solution.getArcbySommetA(s.getid());
+				for(Sommet so:lsommets) {
+					if(so.getid()!=s.getid()) {
+						Arc aj= solution.getArcbySommetD(so.getid());
+						Arc ajm = solution.getArcbySommetA(so.getid());
+						if((so.getid()!=ai.getSomA().getid()) && (aim.getSomD().getid())!=(so.getid())) {
 							
 						}
-							if((distance_i_ip1 + distance_j_jp1 ) > (distance_i_j + distance_ip1_jp1)) {
-								Sommet sip1 = solution.getSommetById(i+1);
-								Sommet sj = solution.getSommetById(j);
-								
-								Arc a1 = solution.getArcbyDA(i, i+1);
-								Arc a2 = solution.getArcbyDA(j, j+1);
-								
-								a1.setSomA(sj);
-								a2.setSomD(sip1);
-							}
 					}
 					
-					
 				}
+						
+			
 			}
 		}
 			
