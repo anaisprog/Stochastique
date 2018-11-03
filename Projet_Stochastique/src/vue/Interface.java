@@ -73,13 +73,14 @@ public class Interface implements ActionListener{
 				          getAbsolutePath();
 				   
 				   ParserXMLFile parser = new ParserXMLFile();
-				   parser.parse(filename);
-				   /*TODO :
-				    * Graph graph = parser.parse(filename);
-				    * prog = new ProgrammeLineaire();
-				    * prog.setGraph(graph);
-				    */
-				   
+				   Graph graph = parser.parse(filename);
+				   if(graph != null){
+					   prog = new ProgrammeLineaire();
+					   prog.setGraph(graph);
+				   } else {
+					   JOptionPane.showMessageDialog(panel, "Format de fichier non valide", "Attention",
+						        JOptionPane.WARNING_MESSAGE);
+				   } 
 				}
 			}
         	
@@ -183,6 +184,7 @@ public class Interface implements ActionListener{
 				}
 				
 				Solveur solv = new Solveur(algochoice, nature, prog);
+				solv.run();
 			}
         	
         });

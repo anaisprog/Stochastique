@@ -36,4 +36,14 @@ public class Graph {
 	public void addArc(Arc a){
 		this.arcs.add(a);
 	}
+	
+	public Sommet getSommetById(int id){
+		for(Sommet s : sommets){
+			if(s.getid() == id){
+				return s;
+			}
+		}
+		
+		return null;
+	}
 }

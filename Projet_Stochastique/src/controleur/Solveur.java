@@ -23,9 +23,9 @@ public class Solveur {
 			RecuitSimuleGenerique rsg = new RecuitSimuleGenerique();
 			rsg.run(prog, nature);
 		} else {
-			/*TODO : CPLEX cplex = new Cplex();
-			 * cplex.run(prog, nature)
-			 */
+			Cplex cplex = new Cplex();
+			cplex.run(prog, nature);
+			 
 		}
 	}
 }

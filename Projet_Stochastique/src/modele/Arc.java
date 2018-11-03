@@ -4,6 +4,7 @@ public class Arc {
 	private Sommet somD;
 	private Sommet somA;
 	
+	private float cout;
 	private float moyenne;
 	private float variance;
 	
@@ -11,7 +12,7 @@ public class Arc {
 		
 	}
 	
-	public Arc(Sommet somD, Sommet somA, float moyenne, float variance) {
+	public Arc(Sommet somD, Sommet somA, float cout, float moyenne, float variance) {
 		super();
 		this.somD = somD;
 		this.somA = somA;
@@ -43,6 +44,14 @@ public class Arc {
 		this.somA = somA;
 	}
 
+	
+	public float getCout() {
+		return cout;
+	}
+
+	public void setCout(float cout) {
+		this.cout = cout;
+	}
 
 	public float getMoyenne() {
 		return moyenne;

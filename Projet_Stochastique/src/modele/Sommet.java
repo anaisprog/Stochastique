@@ -10,12 +10,10 @@ public class Sommet {
 	private float x;
 	//Coordonnée verticale
 	private float y;
-	//Cette variable sera vraie si le sommet a été visité
-	private boolean aEteVisite = false;
+
 	
 	public Sommet() {
 		this.ID++;
-		this.aEteVisite = false;
 	}
 	
 	//Constructeur
@@ -23,7 +21,6 @@ public class Sommet {
 		this.ID++;
 		this.x = x;
 		this.y = y;
-		this.aEteVisite = false;
 	}
 	
 	public int getid(){
@@ -46,14 +43,5 @@ public class Sommet {
 
 	public void sety(float y) {
 		this.y = y;
-	}
-
-	public boolean getaEteVisite() {
-		return this.aEteVisite;
-		
-	}
-	
-	public void setaEteVisite(boolean aEteVisite){
-		this.aEteVisite = aEteVisite;
 	}
 }
