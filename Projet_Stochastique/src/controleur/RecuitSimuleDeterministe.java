@@ -18,7 +18,7 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		
 	}
 	
-	public void run(ProgrammeLineaire prog)
+	public void run()
 	{
 		int diff = 0;
 		int i = 0;
