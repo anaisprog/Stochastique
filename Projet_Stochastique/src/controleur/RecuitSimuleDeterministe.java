@@ -29,7 +29,7 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		
 		
 		while(this.temperature >= 0.00005 && i < 5000){
-			//TODO : finir m�thode voisinage
+			//TODO : finir methode voisinage
 			Graph newsoluce = voisinage(super.generationSolutionInitiale(prog.getGraph()));
 			newe = newsoluce.cout();
 			diff = newe - this.energie;

@@ -27,6 +27,7 @@ public class Interface implements ActionListener{
 	private static JPanel panel;	
 	private static JPanel menu;
 	private static JPanel areaText;
+	private static JPanel affichageVille;
 	
 	
 	//radiobuttons
@@ -83,9 +84,17 @@ public class Interface implements ActionListener{
 				   
 				   ParserXMLFile parser = new ParserXMLFile();
 				   Graph graph = parser.parse(filename);
-				   if(graph != null){
+				   if(graph != null)
+				   {
 					   prog = new ProgrammeLineaire();
 					   prog.setGraph(graph);
+					   
+					   //Affichage des villes sur l'interface
+					   affichageVille = new VilleInterface();
+					   ((VilleInterface) affichageVille).setSonGraphe(graph);
+					   affichageVille.setPreferredSize(new Dimension(500, 500));
+					   panel.add(affichageVille, BorderLayout.EAST);
+					   
 				   } else {
 					   JOptionPane.showMessageDialog(panel, "Format de fichier non valide", "Attention",
 						        JOptionPane.WARNING_MESSAGE);
@@ -209,8 +218,6 @@ public class Interface implements ActionListener{
         
 		
 		
-		
-		
 		JPanel sliderP = new JPanel(new GridLayout(0, 1));
 		Border borderSlid = BorderFactory.createTitledBorder("Taux acceptation de la temperature");
 		sliderP.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0), borderSlid));
@@ -234,6 +241,8 @@ public class Interface implements ActionListener{
 
 		
 		panel.add(menu, BorderLayout.WEST);
+		
+		// Representation des villes
 		
 		
 		// Pour le panel text 

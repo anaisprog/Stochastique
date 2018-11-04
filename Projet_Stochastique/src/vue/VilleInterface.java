@@ -25,11 +25,9 @@ public class VilleInterface extends JPanel implements MouseMotionListener, Compo
 		private Graph sonGraphe;
 		
 		
-		public VilleInterface(Graph graphe)
+		public VilleInterface()
 		{
-			sonGraphe = graphe;
 			positionVillesInterface = new ArrayList<Sommet>(); //Cette liste contient les positions "affichables" des villes
-			this.setBordsFenetre();
 			addComponentListener(this);
 			addMouseMotionListener(this);
 		}
@@ -178,4 +176,11 @@ public class VilleInterface extends JPanel implements MouseMotionListener, Compo
 		}
 	
 
+		public void setSonGraphe(Graph graphe) 
+		{
+			this.sonGraphe = graphe;		
+			setBordsFenetre();
+			positionsAccordingScreen();
+			repaint();
+		}
 }
