@@ -121,10 +121,8 @@ public class MethodeIterative {
 				System.out.println(nbst + " sous-tours détecté");
 			}
 		} catch (UnknownObjectException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IloException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
