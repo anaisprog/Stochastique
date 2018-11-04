@@ -6,20 +6,37 @@ import modele.Arc;
 import modele.Graph;
 import modele.ProgrammeLineaire;
 import modele.Sommet;
-
-public class RecuitSimuleGenerique {
+/*
+ * Djenna : je pense qu'on devrait rendre cette classe générique et y inclure les methodes suivantes :
+ * 	- l'algorithime general du recuit
+ * 	- refus de la probabilite de boltzman
+ * 	ainsi que des methodes abstractes qui seront definies dans les cas stocha et deterministe
+ * 	- calcul de la solution initiale
+ * 	- calcule du voisin
+ * 	- et autres choses au besoin : temperature ...
+ * 
+ * Ensuite il faudrait faire un recuit stochastique :
+ * - methode de l'opt-2
+ * 
+ * Recuit deterministe :
+ * 
+ */
+public class RecuitSimuleGenerique 
+{
+	protected ProgrammeLineaire probleme;
 	protected int energie = 0;
 	protected float temperature = 1000f;
 	protected int pallier = 1;
 	protected float coef = 0.95f;
 	protected int meilleurCout = 0;
+	protected Graph solutionCourante;
 	
 	
 	public RecuitSimuleGenerique() {
 		
 	}
 
-	public RecuitSimuleGenerique(int e, float t, int pallier, float coef, int meilleurCout) {
+	public RecuitSimuleGenerique(ProgrammeLineaire pgm, int e, float t, int pallier, float coef, int meilleurCout) {
 		this.energie = e;
 		this.temperature = t;
 		this.pallier = pallier;
@@ -62,7 +79,8 @@ public class RecuitSimuleGenerique {
 
 
 	/*Lance le calcul de la solution avec l'algorithme du recuit simul�*/
-	public void run(ProgrammeLineaire prog, int nature){
+	public void run(ProgrammeLineaire prog, int nature)
+	{
 		if(nature == 0){
 			RecuitSimuleDeterministe rsd = new RecuitSimuleDeterministe();
 			rsd.run(prog);
@@ -72,6 +90,7 @@ public class RecuitSimuleGenerique {
 		}
 			
 	}
+	
 	
 	
 	/*Ensemble des Getters et Setters*/

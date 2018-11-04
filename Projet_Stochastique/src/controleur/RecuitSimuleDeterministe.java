@@ -13,8 +13,8 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		
 	}
 	
-	public RecuitSimuleDeterministe(int e, float t, int pallier, float coef, int meilleurCout) {
-		super(e, t, pallier, coef, meilleurCout);
+	public RecuitSimuleDeterministe(ProgrammeLineaire pgm, int e, float t, int pallier, float coef, int meilleurCout) {
+		super(pgm, e, t, pallier, coef, meilleurCout);
 		
 	}
 	

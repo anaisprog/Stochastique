@@ -9,8 +9,8 @@ public class RecuitSimuleStochastique extends RecuitSimuleDeterministe {
 		
 	}
 
-	public RecuitSimuleStochastique(int e, float t, int pallier, float coef, int meilleurCout) {
-		super(e, t, pallier, coef, meilleurCout);
+	public RecuitSimuleStochastique(ProgrammeLineaire pgm, int e, float t, int pallier, float coef, int meilleurCout) {
+		super(pgm, e, t, pallier, coef, meilleurCout);
 		
 	}
 	
