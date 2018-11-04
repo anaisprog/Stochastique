@@ -20,8 +20,8 @@ public class Solveur {
 	avec l'algorithme choisis par l'utilisateur*/
 	public void run() {
 		if(algochoice == 0){
-			RecuitSimuleGenerique rsg = new RecuitSimuleGenerique();
-			rsg.run(prog, nature);
+			RecuitSimuleGenerique rsg = new RecuitSimuleGenerique(prog);
+			rsg.run(nature);
 		} else {
 			MethodeIterative mi = new MethodeIterative(prog, nature);
 			mi.run();

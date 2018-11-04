@@ -9,16 +9,16 @@ import modele.Sommet;
 
 public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 
-	public RecuitSimuleDeterministe() {
+	public RecuitSimuleDeterministe(ProgrammeLineaire prog) {
+		super(prog);
+	}
+	
+	public RecuitSimuleDeterministe(int e, float t, int pallier, float coef, int meilleurCout, ProgrammeLineaire prog) {
+		super(e, t, pallier, coef, meilleurCout, prog);
 		
 	}
 	
-	public RecuitSimuleDeterministe(int e, float t, int pallier, float coef, int meilleurCout) {
-		super(e, t, pallier, coef, meilleurCout);
-		
-	}
-	
-	public void run(ProgrammeLineaire prog){
+	public void run(){
 		int diff = 0;
 		int i = 0;
 		int newe = 0;
@@ -34,8 +34,8 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 			Graph newsoluce = voisinage(solutionactuelle);
 			newe = newsoluce.cout();
 			diff = newe - this.energie;
-			System.out.println("CoutActuelle : " + energie);
-			System.out.println("CoutVoisinage : " + newe);
+			/*System.out.println(energie);
+			System.out.println(newe);*/
 			
 			if(diff < 0){
 				compteur++;
@@ -76,16 +76,16 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		Graph solution=graph;
 		ArrayList<Arc> larcs = graph.getArcs();
 	
-		boolean ammelioration = true;
+		boolean amelioration = true;
 		double distance_i_ip1=0;
 		double distance_j_jp1=0;
 		double distance_i_j=0;
 		double distance_ip1_jp1=0;
-		while(ammelioration==true) {
-			ammelioration=false;
-			for(int i=0; i<graph.getSommets().size(); i++) {
-				for(int j=0; j<graph.getSommets().size(); j++) {
-					if(i==0 ) { //On a pas de i-1
+		while(amelioration==true) {
+			amelioration=false;
+			for(int i=1; i<= graph.getSommets().size(); i++) {
+				for(int j=1; j<= graph.getSommets().size(); j++) {
+					if(i==1) { //On a pas de i-1
 						if(i!=j && j!=i+1 ) { //On verifie les conditions de l'algorithme
 							distance_i_ip1 = graph.getArcbyDA(i, i+1).getCout();
 							distance_j_jp1 = graph.getArcbyDA(i, i+1).getCout();
@@ -101,12 +101,14 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 								Arc a2 = solution.getArcbyDA(j, j+1);
 								
 								a1.setSomA(sj);
+								a1.setCout(prog.getGraph().getArcbyDA(a1.getSomD().getid(), a1.getSomA().getid()).getCout());
 								a2.setSomD(sip1);
+								a2.setCout(prog.getGraph().getArcbyDA(a2.getSomD().getid(), a2.getSomA().getid()).getCout());
 							}
 								
 							}
 						}
-						else {
+						/*else {
 							
 							if(i!=j && j!=i+1 && j!=i-1) { //On verifie les conditions de l'algorithme
 								distance_i_ip1 = graph.getArcbyDA(i, i+1).getCout();
@@ -125,7 +127,7 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 								a1.setSomA(sj);
 								a2.setSomD(sip1);
 							}
-					}
+					}*/
 					
 					
 				}

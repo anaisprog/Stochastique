@@ -13,18 +13,19 @@ public class RecuitSimuleGenerique {
 	protected int pallier = 1;
 	protected float coef = 0.95f;
 	protected int meilleurCout = 0;
+	protected ProgrammeLineaire prog;
 	
-	
-	public RecuitSimuleGenerique() {
-		
+	public RecuitSimuleGenerique(ProgrammeLineaire prog) {
+		this.prog = prog;
 	}
-
-	public RecuitSimuleGenerique(int e, float t, int pallier, float coef, int meilleurCout) {
+	
+	public RecuitSimuleGenerique(int e, float t, int pallier, float coef, int meilleurCout, ProgrammeLineaire prog) {
 		this.energie = e;
 		this.temperature = t;
 		this.pallier = pallier;
 		this.coef = coef;
 		this.meilleurCout = meilleurCout;
+		this.prog = prog;
 	}
 	
 	
@@ -62,13 +63,13 @@ public class RecuitSimuleGenerique {
 
 
 	/*Lance le calcul de la solution avec l'algorithme du recuit simul�*/
-	public void run(ProgrammeLineaire prog, int nature){
+	public void run(int nature){
 		if(nature == 0){
-			RecuitSimuleDeterministe rsd = new RecuitSimuleDeterministe();
-			rsd.run(prog);
+			RecuitSimuleDeterministe rsd = new RecuitSimuleDeterministe(prog);
+			rsd.run();
 		} else {
-			RecuitSimuleStochastique rss = new RecuitSimuleStochastique();
-			//TODO : rss.run(prog);
+			RecuitSimuleStochastique rss = new RecuitSimuleStochastique(prog);
+			//TODO : rss.run();
 		}
 			
 	}
