@@ -3,8 +3,8 @@ package controleur;
 import modele.ProgrammeLineaire;
 
 public class Solveur {
-	int algochoice; /*attribut permettant d'identifier quelle algorithme*/
-	int nature; /*type de problème lâ€™utilisateur souhaite résoudre*/
+	int algochoice; /*attribut permettant d'identifier quel algorithme*/
+	int nature; /*type de problï¿½me lâ€™utilisateur souhaite rï¿½soudre*/
 	ProgrammeLineaire prog;
 	
 	
@@ -16,7 +16,7 @@ public class Solveur {
 		this.prog = prog;
 	}
 	
-	/*méthode permettant d'executer la résolution du problème
+	/*mï¿½thode permettant d'executer la rï¿½solution du problï¿½me
 	avec l'algorithme choisis par l'utilisateur*/
 	public void run() {
 		if(algochoice == 0){

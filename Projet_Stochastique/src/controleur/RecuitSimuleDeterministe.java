@@ -24,18 +24,20 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		int newe = 0;
 		int compteur = 0;
 		float proba = 0;
-		Graph solutionactuelle = super.generationSolutionInitiale(prog.getGraph());
 		
-		this.energie = solutionactuelle.cout();
+		this.energie = super.generationSolutionInitiale(prog.getGraph()).cout();
 		
-		System.out.println(energie);
 		
 		while(this.temperature >= 0.00005 && i < 5000){
-			Graph newsoluce = voisinage(solutionactuelle);
+			//TODO : finir methode voisinage
+			Graph newsoluce = voisinage(super.generationSolutionInitiale(prog.getGraph()));
 			newe = newsoluce.cout();
 			diff = newe - this.energie;
+<<<<<<< HEAD
 			/*System.out.println(energie);
 			System.out.println(newe);*/
+=======
+>>>>>>> 0ed1390fa857d106f43611306661584d3b7ef0f9
 			
 			if(diff < 0){
 				compteur++;
@@ -43,13 +45,11 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 					this.temperature = (this.temperature * this.coef);
 					compteur = 0;
 				}
-				
-				solutionactuelle = newsoluce;
+					
 				this.energie = newe;
 				
 				if(newe < meilleurCout)
 					this.meilleurCout = newe;
-				
 				
 			} else {
 				 proba = (float) Math.exp(-diff/this.temperature);
@@ -60,10 +60,8 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 						this.temperature = (this.temperature * this.coef);
 						compteur = 0;
 					}
-					
-					solutionactuelle = newsoluce;
+						
 					this.energie = newe;
-					
 					if(newe < meilleurCout)
 						this.meilleurCout = newe;
 				}	
@@ -71,7 +69,7 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		}
 	}
 	
-	/*Cette fonction execute la m�thode de voisinage�ge , ​ par​ ​ défaut 2-opt*/
+	/*Cette fonction execute la methode de voisinage, ​ par​ ​ défaut 2-opt*/
 	public Graph voisinage(Graph graph) {
 		Graph solution=graph;
 		ArrayList<Arc> larcs = graph.getArcs();
@@ -81,6 +79,7 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		double distance_j_jp1=0;
 		double distance_i_j=0;
 		double distance_ip1_jp1=0;
+<<<<<<< HEAD
 		while(amelioration==true) {
 			amelioration=false;
 			for(int i=1; i<= graph.getSommets().size(); i++) {
@@ -128,9 +127,27 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 								a2.setSomD(sip1);
 							}
 					}*/
-					
+=======
+		ArrayList<Sommet> lsommets = solution.getSommets();
+		while(ammelioration==true) {
+			ammelioration=false;
+			for(Sommet s:lsommets)
+			{	
+				Arc ai= solution.getArcbySommetD(s.getid());
+				Arc aim = solution.getArcbySommetA(s.getid());
+				for(Sommet so:lsommets) {
+					if(so.getid()!=s.getid()) {
+						Arc aj= solution.getArcbySommetD(so.getid());
+						Arc ajm = solution.getArcbySommetA(so.getid());
+						if((so.getid()!=ai.getSomA().getid()) && (aim.getSomD().getid())!=(so.getid())) {
+							
+						}
+					}
+>>>>>>> 0ed1390fa857d106f43611306661584d3b7ef0f9
 					
 				}
+						
+			
 			}
 		}
 			

@@ -1,5 +1,6 @@
 package controleur;
 
-public class CplexStocha {
+public class CplexStocha 
+{
 
 }
