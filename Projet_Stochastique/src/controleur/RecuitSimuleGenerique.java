@@ -9,7 +9,7 @@ import modele.Sommet;
 
 public class RecuitSimuleGenerique {
 	protected int energie = 0;
-	protected float temperature = 1000f;
+	protected float temperature = 100f;
 	protected int pallier = 1;
 	protected float coef = 0.95f;
 	protected int meilleurCout = 0;
@@ -28,14 +28,12 @@ public class RecuitSimuleGenerique {
 		this.prog = prog;
 	}
 	
-	
-	// Fonction d'obtention d'un cycle initial
-	
-	
 	public Graph generationSolutionInitiale(Graph g)
 	{
-		Graph graphSolution=new Graph();
-		ArrayList<Sommet> lsommet = g.getSommets();
+		Graph graphSolution = new Graph();
+		graphSolution.setSommets(g.getSommets());
+		
+		ArrayList<Sommet> lsommet = graphSolution.getSommets();
 		
 		for(Sommet s : lsommet) {
 			Sommet sa;

@@ -28,16 +28,15 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		solutionactuelle = super.generationSolutionInitiale(prog.getGraph());
 		
 		this.energie = solutionactuelle.cout();
+		this.meilleurCout = energie;
 		
 		
 		while(this.temperature >= 0.00005 && i < 5000){
+			
 			//TODO : finir methode voisinage
 			Graph newsoluce = voisinage(solutionactuelle);
 			newe = newsoluce.cout();
 			diff = newe - this.energie;
-
-			/*System.out.println("COUT BASE : " + energie);
-			System.out.println("COUT NEW : " + newe);*/
 
 			if(diff < 0){
 				compteur++;
@@ -49,8 +48,10 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 				solutionactuelle = newsoluce;
 				this.energie = newe;
 				
-				if(newe < meilleurCout)
+				if(newe < meilleurCout){
 					this.meilleurCout = newe;
+					System.out.println("new meilleur cout : " + this.meilleurCout);
+				}
 				
 			} else {
 				 proba = (float) Math.exp(-diff/this.temperature);
@@ -64,24 +65,33 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 					
 					solutionactuelle = newsoluce;
 					this.energie = newe;
-					if(newe < meilleurCout)
+					if(newe < meilleurCout){
 						this.meilleurCout = newe;
+						System.out.println("new meilleur cout : " + this.meilleurCout);
+					}
 				}	
 			}
+			i++;
 		}
+		
+		System.out.println("MEILLEUR COUT FINAL : " + this.meilleurCout);
 	}
 	
 	/*Cette fonction execute la methode de voisinage, ​ par​ ​ d�faut 2-opt*/
 	public Graph voisinage(Graph graph) {
-		Graph solution=graph;
+		
+		Graph solution = new Graph();
+		solution.setArcs(graph.getArcs());
+		solution.setSommets(graph.getSommets());
+		
 		ArrayList<Arc> larcs = graph.getArcs();
-	
+		
 		boolean amelioration = true;
 
 		ArrayList<Sommet> lsommets = solution.getSommets();
+		
 		while(amelioration == true) {
 			amelioration = false;
-			
 			for(Sommet i : lsommets){	
 				Arc ai = solution.getArcbySommetD(i.getid());
 				Arc aim = solution.getArcbySommetA(i.getid());
@@ -93,6 +103,7 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 						
 						/*Condition j != i+1 && j != i-1*/
 						if((j.getid() != ai.getSomA().getid()) && (aim.getSomD().getid()) != (j.getid())) {
+							
 							Arc aij = super.prog.getGraph().getArcbyDA(i.getid(), j.getid());
 							Arc aipjp = super.prog.getGraph().getArcbyDA(ai.getSomA().getid(), aj.getSomA().getid());
 							
@@ -100,13 +111,50 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 							double coutT = aij.getCout() + aipjp.getCout();
 							
 							if(coutO > coutT){
-								solution.getArcbySommetD(i.getid()).setSomA(j);
-								solution.getArcbySommetD(j.getid()).setSomD(ai.getSomA());
 								
+								
+								int idip = ai.getSomA().getid();
+								int soma = j.getid();
+								ArrayList<Arc> larcinverse = new ArrayList<>();
+								
+								do {
+								Arc a = solution.getArcbySommetA(soma);
+								
+								larcinverse.add(a);
+								
+								soma = a.getSomD().getid();
+									
+								} while(idip != soma);
+								
+								Sommet ip = ai.getSomA();
+								
+								solution.getArcbySommetD(i.getid()).setCout(aij.getCout());
+								solution.getArcbySommetD(i.getid()).setSomA(j);
+								
+								solution.getArcbySommetD(j.getid()).setCout(aipjp.getCout());
+								solution.getArcbySommetD(j.getid()).setSomD(ip);
+						
+								
+								for(Arc a : larcinverse){
+									Sommet dp = a.getSomA();
+									Sommet ar = a.getSomD();
+									
+									a.setSomD(dp);
+									a.setSomA(ar);
+									
+									a.setCout(prog.getGraph().getArcbyDA(a.getSomD().getid(), a.getSomA().getid()).getCout());
+								}
 								amelioration = true;
+								
+								/*System.out.println("AMELIORATION");
+								for(Arc a : solution.getArcs()){
+									System.out.println("Arc entre " + a.getSomD().getid() + " et " + a.getSomA().getid()
+									+ " | cout = " + a.getCout());
+									}
+									System.out.println("--------------------------------------------------");*/
 							}
 						}
-					}	
+					}
 				}
 			}
 		}
