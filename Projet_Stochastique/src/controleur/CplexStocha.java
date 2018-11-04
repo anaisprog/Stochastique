@@ -1,6 +1,10 @@
 package controleur;
 
-public class CplexStocha 
+import ilog.concert.IloException;
+import ilog.concert.IloNumVar;
+import modele.ProgrammeLineaire;
+
+public class CplexStocha extends Cplex
 {
 
 }

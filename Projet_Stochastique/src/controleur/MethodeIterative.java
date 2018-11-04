@@ -20,10 +20,9 @@ public class MethodeIterative {
 		this.nature = nature;
 	}
 
-	public void run() {
+	public void run() throws IloException {
 		if (nature == 0) {
-			Cplex cplex = new Cplex();
-			cplex.createModel(prog, nature);
+			Cplex cplex = new Cplex(prog, nature);
 			cplex.solve();
 			
 			/*
@@ -64,7 +63,7 @@ public class MethodeIterative {
 			boolean st = contrainteSousTour(cplex);
 
 			if (st) {
-				System.out.println("Contrainte de sous-tours ajouté au model");
+				System.out.println("Contrainte de sous-tours ajoutï¿½ au model");
 				cplex.solve();
 			}
 		} else {
@@ -137,7 +136,7 @@ public class MethodeIterative {
 					}
 				}
 
-				System.out.println( nbst + " sous-tours détecté");
+				System.out.println( nbst + " sous-tours dï¿½tectï¿½");
 			}
 		} catch (UnknownObjectException e) {
 			// TODO Auto-generated catch block

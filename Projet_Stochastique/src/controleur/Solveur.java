@@ -1,5 +1,6 @@
 package controleur;
 
+import ilog.concert.IloException;
 import modele.ProgrammeLineaire;
 
 public class Solveur {
@@ -18,7 +19,7 @@ public class Solveur {
 	
 	/*m�thode permettant d'executer la r�solution du probl�me
 	avec l'algorithme choisis par l'utilisateur*/
-	public void run() {
+	public void run() throws IloException {
 		if(algochoice == 0){
 			RecuitSimuleGenerique rsg = new RecuitSimuleGenerique(prog);
 			rsg.run(nature);

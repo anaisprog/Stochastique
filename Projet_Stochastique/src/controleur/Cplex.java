@@ -14,21 +14,32 @@ public class Cplex {
 	private IloLinearNumExpr fct;
 	private IloNumVar[][] var;
 	private double[][] cout;
+	private ProgrammeLineaire probleme;
+	private int nature;
 	
-	public Cplex() {
+	public Cplex() 
+	{
 		try {
 			this.model = new IloCplex();
 		} catch (IloException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	public Cplex (ProgrammeLineaire probleme, int nature) throws IloException 
+	{
+		this.probleme = probleme;
+		this.model = new IloCplex();
+		this.nature = nature;
+		createModel();
+	}
 
-	public void createModel(ProgrammeLineaire prog, int nature) {
-		if (nature == 0) {
+	public void createModel() {
+		if (this.nature == 0) {
 			try {
 
-				ArrayList<Sommet> lsommet = prog.getGraph().getSommets();
-				ArrayList<Arc> larc = prog.getGraph().getArcs();
+				ArrayList<Sommet> lsommet = this.probleme.getGraph().getSommets();
+				ArrayList<Arc> larc = this.probleme.getGraph().getArcs();
 				this.var = new IloNumVar[lsommet.size() + 1][lsommet.size() + 1];
 				this.cout = new double[lsommet.size() + 1][lsommet.size() + 1];
 
@@ -45,7 +56,7 @@ public class Cplex {
 					}
 				}
 
-				/* Création de la fonction objectif et ajout au model */
+				/* Crï¿½ation de la fonction objectif et ajout au model */
 				this.fct = model.linearNumExpr();
 				for (int i = 1; i <= lsommet.size(); i++) {
 					for (int j = 1; j <= lsommet.size(); j++) {
@@ -56,7 +67,7 @@ public class Cplex {
 				}
 				model.addMinimize(fct);
 
-				/* Ajout de la première contrainte de parcour */
+				/* Ajout de la premiï¿½re contrainte de parcour */
 				for (int j = 1; j <= lsommet.size(); j++) {
 					IloLinearNumExpr expr = model.linearNumExpr();
 					for (int i = 1; i <= lsommet.size(); i++) {
