@@ -85,11 +85,11 @@ public class RecuitSimuleGenerique
 	{
 		if(nature == 0){
 			RecuitSimuleDeterministe rsd = new RecuitSimuleDeterministe(prog);
+			rsd.run(nature);
 		} else {
 			RecuitSimuleStochastique rss = new RecuitSimuleStochastique(prog);
 			//TODO : rss.run();
 		}
-			
 	}
 	
 	

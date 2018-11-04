@@ -3,6 +3,7 @@ package controleur;
 import java.util.ArrayList;
 
 import ilog.concert.IloException;
+import ilog.concert.IloLinearNumExpr;
 import ilog.concert.IloNumVar;
 import ilog.cplex.IloCplex;
 import ilog.cplex.IloCplex.UnknownObjectException;
@@ -112,31 +113,36 @@ public class MethodeIterative {
 						listeparcour.add(so.getid());
 						alreadytreated.add(so.getid());
 						
-
 						do {
 							ad = newsoluce.getArcbySommetD(so.getid());
 							so = ad.getSomA();
-
-							listeparcour.add(so.getid());
-							alreadytreated.add(so.getid());
+							if(so.getid() != s.getid()){
+								listeparcour.add(so.getid());
+								alreadytreated.add(so.getid());
+							}
 						} while (so.getid() != s.getid());
 
-						if ((listeparcour.size()-1) != lsommet.size()) {
+						if ((listeparcour.size()) != lsommet.size()) {
 							nbst++;
 							st = true;
-							System.out.println(listeparcour);
+							//System.out.println(listeparcour);
 							
-							/*
-							 * TODO : Ajout des contraintes au model
-							 * (cplex.setModel(model));
-							 * 
-							 */
+							IloLinearNumExpr cons = model.linearNumExpr();
+							
+							for(int i = 0; i < listeparcour.size(); i++){
+								int d = listeparcour.get(i).intValue();
+								int a = listeparcour.get(i+1).intValue();
+								
+								cons.addTerm(1.0, var[d][a]);
+							}
+							
+							model.addLe(cons, listeparcour.size()-1);
 
 							listeparcour.clear();
 						}
 					}
 				}
-
+				cplex.setModel(model);
 				System.out.println( nbst + " sous-tours détecté");
 			}
 		} catch (UnknownObjectException e) {

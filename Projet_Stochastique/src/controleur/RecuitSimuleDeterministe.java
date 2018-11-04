@@ -34,7 +34,6 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		
 		while(this.temperature >= 0.00005 && i < 5000){
 			
-			//TODO : finir methode voisinage
 			Graph newsoluce = voisinage(solutionactuelle);
 			newe = newsoluce.cout();
 			diff = newe - this.energie;
@@ -135,7 +134,6 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 								solution.getArcbySommetD(j.getid()).setCout(aipjp.getCout());
 								solution.getArcbySommetD(j.getid()).setSomD(ip);
 						
-								
 								for(Arc a : larcinverse){
 									Sommet dp = a.getSomA();
 									Sommet ar = a.getSomD();

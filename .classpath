@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="Projet_Stochastique/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Applications/CPLEX_Studio128/cplex/lib/cplex.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/IBM/ILOG/CPLEX_Studio128/cplex/lib/cplex.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
