@@ -90,11 +90,11 @@ public class Interface implements ActionListener{
 					   prog = new ProgrammeLineaire();
 					   prog.setGraph(graph);
 					   
-					   //Affichage des villes sur l'interface
+					   /*Affichage des villes sur l'interface
 					   affichageVille = new VilleInterface();
 					   ((VilleInterface) affichageVille).setSonGraphe(graph);
 					   affichageVille.setPreferredSize(new Dimension(500, 500));
-					   panel.add(affichageVille, BorderLayout.EAST);
+					   panel.add(affichageVille, BorderLayout.EAST);*/
 					   
 				   } else {
 					   JOptionPane.showMessageDialog(panel, "Format de fichier non valide", "Attention",
