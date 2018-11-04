@@ -24,14 +24,14 @@ public class MethodeIterative {
 	public void run() throws IloException {
 		if (nature == 0) {
 			Cplex cplex = new Cplex(prog, nature);
-			cplex.solve();
+			boolean st;
 
-			boolean st = contrainteSousTour(cplex);
-
-			if (st) {
-				System.out.println("Contrainte de sous-tours ajoutï¿½ au model");
+			do {
 				cplex.solve();
-			}
+
+				st = contrainteSousTour(cplex);
+				System.out.println("Contrainte de sous-tours ajouté au model");
+			} while (st);
 		} else {
 
 		}
@@ -58,6 +58,8 @@ public class MethodeIterative {
 								Sommet sj = prog.getGraph().getSommetById(j);
 								Arc a = new Arc(si, sj, cout[i][j], 0, 0);
 								newsoluce.addArc(a);
+								System.out.println("Arc entre " + a.getSomD().getid() + " et " + a.getSomA().getid()
+										+ " | cout = " + a.getCout());
 							}
 						}
 					}
@@ -71,6 +73,7 @@ public class MethodeIterative {
 
 						listeparcour.add(s.getid());
 						alreadytreated.add(s.getid());
+
 						Arc ad = newsoluce.getArcbySommetD(s.getid());
 						Sommet so = ad.getSomA();
 
@@ -80,6 +83,7 @@ public class MethodeIterative {
 						do {
 							ad = newsoluce.getArcbySommetD(so.getid());
 							so = ad.getSomA();
+
 							if (so.getid() != s.getid()) {
 								listeparcour.add(so.getid());
 								alreadytreated.add(so.getid());
@@ -89,13 +93,20 @@ public class MethodeIterative {
 						if ((listeparcour.size()) != lsommet.size()) {
 							nbst++;
 							st = true;
-							// System.out.println(listeparcour);
+							System.out.println(listeparcour);
 
 							IloLinearNumExpr cons = model.linearNumExpr();
 
 							for (int i = 0; i < listeparcour.size(); i++) {
 								int d = listeparcour.get(i).intValue();
-								int a = listeparcour.get(i + 1).intValue();
+								int a;
+
+								if (i + 1 == listeparcour.size()) {
+									a = listeparcour.get(0).intValue();
+									;
+								} else {
+									a = listeparcour.get(i + 1).intValue();
+								}
 
 								cons.addTerm(1.0, var[d][a]);
 							}
@@ -106,10 +117,8 @@ public class MethodeIterative {
 						}
 					}
 					cplex.setModel(model);
-
-					System.out.println(nbst + " sous-tours dï¿½tectï¿½");
-
 				}
+				System.out.println(nbst + " sous-tours détecté");
 			}
 		} catch (UnknownObjectException e) {
 			// TODO Auto-generated catch block

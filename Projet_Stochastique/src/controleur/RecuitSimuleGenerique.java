@@ -25,7 +25,7 @@ public class RecuitSimuleGenerique
 {
 	protected ProgrammeLineaire probleme;
 	protected int energie = 0;
-	protected float temperature = 100f;
+	protected float temperature = 1000f;
 	protected int pallier = 1;
 	protected float coef = 0.95f;
 	protected int meilleurCout = 0;

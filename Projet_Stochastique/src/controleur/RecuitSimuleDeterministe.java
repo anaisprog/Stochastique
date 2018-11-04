@@ -18,6 +18,10 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		
 	}
 	
+	public void initTemperature(){
+		
+	}
+	
 	public void run()
 	{
 		int diff = 0;
@@ -25,12 +29,15 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		int newe = 0;
 		int compteur = 0;
 		float proba = 0;
+		
+		int engen = 0;
+		int pos = 0;
+		
 		Graph solutionactuelle;
 		solutionactuelle = super.generationSolutionInitiale(prog.getGraph());
 		
 		this.energie = solutionactuelle.cout();
 		this.meilleurCout = energie;
-		
 		
 		while(this.temperature >= 0.00005 && i < 5000){
 			
@@ -54,9 +61,11 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 				}
 				
 			} else {
-				 proba = (float) Math.exp(-diff/this.temperature);
+				engen++;
+				proba = (float) Math.exp(-diff/this.temperature);
 					
 				if(Math.random() < proba){
+					pos++;
 					compteur++;
 					if(compteur >= this.pallier){
 						this.temperature = (this.temperature * this.coef);
@@ -75,6 +84,13 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		}
 		
 		System.out.println("MEILLEUR COUT FINAL : " + this.meilleurCout);
+		System.out.println("pos : " + pos + " | engen : " + engen);
+		
+		if((pos/engen) > 0.95){
+			this.temperature = this.temperature / 2;
+			run();
+		}
+		
 	}
 	
 	/*Cette fonction execute la methode de voisinage, ​ par​ ​ d�faut 2-opt*/
