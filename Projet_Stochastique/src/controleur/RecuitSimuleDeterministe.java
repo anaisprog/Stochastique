@@ -13,12 +13,13 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		super(prog);
 	}
 	
-	public RecuitSimuleDeterministe(int e, float t, int pallier, float coef, int meilleurCout, ProgrammeLineaire prog) {
-		super(e, t, pallier, coef, meilleurCout, prog);
+	public RecuitSimuleDeterministe(ProgrammeLineaire pgm, int e, float t, int pallier, float coef, int meilleurCout) {
+		super(pgm, e, t, pallier, coef, meilleurCout);
 		
 	}
 	
-	public void run(){
+	public void run(ProgrammeLineaire prog)
+	{
 		int diff = 0;
 		int i = 0;
 		int newe = 0;
@@ -77,7 +78,7 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		System.out.println("MEILLEUR COUT FINAL : " + this.meilleurCout);
 	}
 	
-	/*Cette fonction execute la methode de voisinage, ​ par​ ​ d�faut 2-opt*/
+	/*Cette fonction execute la methode de voisinage, ​ par​ ​ d�faut 2-opt*/
 	public Graph voisinage(Graph graph) {
 		
 		Graph solution = new Graph();
