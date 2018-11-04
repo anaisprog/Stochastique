@@ -14,6 +14,7 @@ import javax.swing.border.CompoundBorder;
 
 import controleur.ParserXMLFile;
 import controleur.Solveur;
+import ilog.concert.IloException;
 import modele.Graph;
 import modele.ProgrammeLineaire;
 
@@ -202,7 +203,12 @@ public class Interface implements ActionListener{
 				}
 				
 				Solveur solv = new Solveur(algochoice, nature, prog);
-				solv.run();
+				try {
+					solv.run();
+				} catch (IloException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
         	
         });
