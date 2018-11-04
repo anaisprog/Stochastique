@@ -33,12 +33,10 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 			Graph newsoluce = voisinage(super.generationSolutionInitiale(prog.getGraph()));
 			newe = newsoluce.cout();
 			diff = newe - this.energie;
-<<<<<<< HEAD
+
 			/*System.out.println(energie);
 			System.out.println(newe);*/
-=======
->>>>>>> 0ed1390fa857d106f43611306661584d3b7ef0f9
-			
+
 			if(diff < 0){
 				compteur++;
 				if(compteur >= this.pallier){
@@ -79,58 +77,10 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		double distance_j_jp1=0;
 		double distance_i_j=0;
 		double distance_ip1_jp1=0;
-<<<<<<< HEAD
+
+		ArrayList<Sommet> lsommets = solution.getSommets();
 		while(amelioration==true) {
 			amelioration=false;
-			for(int i=1; i<= graph.getSommets().size(); i++) {
-				for(int j=1; j<= graph.getSommets().size(); j++) {
-					if(i==1) { //On a pas de i-1
-						if(i!=j && j!=i+1 ) { //On verifie les conditions de l'algorithme
-							distance_i_ip1 = graph.getArcbyDA(i, i+1).getCout();
-							distance_j_jp1 = graph.getArcbyDA(i, i+1).getCout();
-							distance_i_j =  graph.getArcbyDA(i, j).getCout();
-							distance_ip1_jp1 = graph.getArcbyDA(i+1, j+1).getCout();
-						//	Si distance(xi, xi+1) + distance(xj, xj+1) > distance(xi, xj) + distance(xi+1, xj+1) alors
-							
-							if((distance_i_ip1 + distance_j_jp1 ) > (distance_i_j + distance_ip1_jp1)) {
-								Sommet sip1 = solution.getSommetById(i+1);
-								Sommet sj = solution.getSommetById(j);
-								
-								Arc a1 = solution.getArcbyDA(i, i+1);
-								Arc a2 = solution.getArcbyDA(j, j+1);
-								
-								a1.setSomA(sj);
-								a1.setCout(prog.getGraph().getArcbyDA(a1.getSomD().getid(), a1.getSomA().getid()).getCout());
-								a2.setSomD(sip1);
-								a2.setCout(prog.getGraph().getArcbyDA(a2.getSomD().getid(), a2.getSomA().getid()).getCout());
-							}
-								
-							}
-						}
-						/*else {
-							
-							if(i!=j && j!=i+1 && j!=i-1) { //On verifie les conditions de l'algorithme
-								distance_i_ip1 = graph.getArcbyDA(i, i+1).getCout();
-								distance_j_jp1 = graph.getArcbyDA(i, i+1).getCout();
-								distance_i_j =  graph.getArcbyDA(i, j).getCout();
-								distance_ip1_jp1 = graph.getArcbyDA(i+1, j+1).getCout();
-							
-						}
-							if((distance_i_ip1 + distance_j_jp1 ) > (distance_i_j + distance_ip1_jp1)) {
-								Sommet sip1 = solution.getSommetById(i+1);
-								Sommet sj = solution.getSommetById(j);
-								
-								Arc a1 = solution.getArcbyDA(i, i+1);
-								Arc a2 = solution.getArcbyDA(j, j+1);
-								
-								a1.setSomA(sj);
-								a2.setSomD(sip1);
-							}
-					}*/
-=======
-		ArrayList<Sommet> lsommets = solution.getSommets();
-		while(ammelioration==true) {
-			ammelioration=false;
 			for(Sommet s:lsommets)
 			{	
 				Arc ai= solution.getArcbySommetD(s.getid());
@@ -143,7 +93,6 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 							
 						}
 					}
->>>>>>> 0ed1390fa857d106f43611306661584d3b7ef0f9
 					
 				}
 						
