@@ -19,7 +19,7 @@ public class ParserXMLFile {
 	private static int nombreVilles;
 	private Graph g;
 
-	/* Fonction pour réaliser le parsing, renvoie un graph qui contient la liste des sommets. */
+	/* Fonction pour realiser le parsing, renvoie un graph qui contient la liste des sommets. */
 	public Graph parse(String filename) {
 		try {
 			g = new Graph();
@@ -50,7 +50,6 @@ public class ParserXMLFile {
 				
 				for (int temp = 0; temp < nbedgepervertex; temp++) {
 					villeActuelle += 1;
-					// System.out.println("villeActuelle" + villeActuelle);
 					Node nNode = nListEdge.item(temp + k);
 					
 					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -60,8 +59,6 @@ public class ParserXMLFile {
 
 						Sommet sa = g.getSommetById(numSommetA + 1);
 						Arc a = new Arc(s, sa, cout, 0, 0);
-						/*System.out.println("Arc entre " + a.getSomD().getid() + " et " + a.getSomA().getid()
-								+ " | cout = " + a.getCout());*/
 						g.addArc(a);
 					}
 				}

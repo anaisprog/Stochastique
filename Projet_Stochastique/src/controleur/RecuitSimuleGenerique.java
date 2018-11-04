@@ -6,21 +6,7 @@ import modele.Arc;
 import modele.Graph;
 import modele.ProgrammeLineaire;
 import modele.Sommet;
-/*
- * Djenna : je pense qu'on devrait rendre cette classe générique et y inclure les methodes suivantes :
- * 	- l'algorithime general du recuit
- * 	- refus de la probabilite de boltzman
- * 	ainsi que des methodes abstractes qui seront definies dans les cas stocha et deterministe
- * 	- calcul de la solution initiale
- * 	- calcule du voisin
- * 	- et autres choses au besoin : temperature ...
- * 
- * Ensuite il faudrait faire un recuit stochastique :
- * - methode de l'opt-2
- * 
- * Recuit deterministe :
- * 
- */
+
 public class RecuitSimuleGenerique 
 {
 	protected ProgrammeLineaire probleme;
@@ -68,19 +54,12 @@ public class RecuitSimuleGenerique
 			
 			graphSolution.addArc(a);
 		}
-		/*//On boucle sur l'ensemble des sommets du graph initial
-		for(int i=1; i<=g.getSommets().size(); i++)
-		{	
-			
-			a=new Arc(g.getSommetById(i), g.getSommetById(i+1),g.getArcbyDA(i, i+1).getCout(),0.f,0.f);
-			
-			graphSolution.addArc(a);
-		}*/
+
 		return graphSolution;	
 	}
 
 
-	/*Lance le calcul de la solution avec l'algorithme du recuit simul�*/
+	/*Lance le calcul de la solution avec l'algorithme du recuit simule*/
 	public void run(int nature)
 	{
 		if(nature == 0){

@@ -2,11 +2,8 @@ package modele;
 import java.util.*;
 
 public class ProgrammeLineaire {
-	private Matrice matriceContraintes; 
-	private ArrayList<Matrice> iterations; 
-	
+
 	private int nbIterations; 
-	private double meilleureSolution; 
 	
 	private boolean maximisation; 
 	private Graph graph;
@@ -16,12 +13,11 @@ public class ProgrammeLineaire {
 		
 	}
 
-	public ProgrammeLineaire(Matrice matriceContraintes, ArrayList<Matrice> iterations, int nbIterations,
-			double meilleureSolution, boolean maximisation, Graph graph) {
-		this.matriceContraintes = matriceContraintes;
-		this.iterations = iterations;
+	public ProgrammeLineaire(int nbIterations,
+		 boolean maximisation, Graph graph) {
+	
 		this.nbIterations = nbIterations;
-		this.meilleureSolution = meilleureSolution;
+		
 		this.maximisation = maximisation;
 		this.graph = graph;
 	}
@@ -35,41 +31,23 @@ public class ProgrammeLineaire {
 	public void setGraph(Graph graph) {
 		this.graph = graph;
 	}
-	
-	/*Permet d'ajouter une contrainte au probl�me et donc une ligne de plus dans la matrice.*/
-	public void addContraintes(ArrayList<Double> ligne) {
-		
-	}
-	
-	/*Permet d'ajouter la fonction objectif en prenant les contraintes*/
-	public void addFctObj(ArrayList<Double> ligne) {
-		
-	}
-	
-	/* Retourne la solution du système dans une ArrayList.*/
-	public ArrayList<Double> getSolution() {
-		return null;
-		
-	}
-		
-	public void addIteration() {
-	}
-	
 
-	public int getColonnes() {
-		return 2;
+	public int getNbIterations() {
+		return nbIterations;
 	}
-	
-	public double getMeilleureSolution() {
-		return meilleureSolution;
+
+	public void setNbIterations(int nbIterations) {
+		this.nbIterations = nbIterations;
 	}
-	
-	public void setMeilleureSolution(double meilleureSolution) {
-		this.meilleureSolution = meilleureSolution;
+
+	public boolean isMaximisation() {
+		return maximisation;
 	}
-	
-	
-	
+
+	public void setMaximisation(boolean maximisation) {
+		this.maximisation = maximisation;
+	}
+
 	
 	
 }

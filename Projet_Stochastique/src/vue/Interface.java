@@ -1,6 +1,4 @@
 package vue;
-
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -110,7 +108,7 @@ public abstract class Interface implements ActionListener {
 		
 		//Radio Buttons pour les differents algo
 		JPanel algorithme = new JPanel(new GridLayout(0, 1));
-		Border border = BorderFactory.createTitledBorder("Choix Algorithme de rÃ©solution");
+		Border border = BorderFactory.createTitledBorder("Choix Algorithme de resolution");
 		algorithme.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0), border));
 
 
@@ -142,7 +140,7 @@ public abstract class Interface implements ActionListener {
 		
 		//Radio Buttons pour le type du problème 
 		JPanel resolution = new JPanel(new GridLayout(5, 1));
-		Border border2 = BorderFactory.createTitledBorder("Choix type de résolution");
+		Border border2 = BorderFactory.createTitledBorder("Choix type de resolution");
 		resolution.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0), border2));
 
 		deterministe = new JRadioButton("Deterministe");
@@ -220,36 +218,10 @@ public abstract class Interface implements ActionListener {
 			}
         	
         });
-        
-		
-		
-		
-	/*	
-		JPanel sliderP = new JPanel(new GridLayout(0, 1));
-		Border borderSlid = BorderFactory.createTitledBorder("Taux acceptation de la temperature");
-		sliderP.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0), borderSlid));
-		
-		JSlider slider = new JSlider(0, 100, 0);
-		slider.setMajorTickSpacing(10);
-		slider.setMinorTickSpacing(10);
-		slider.setPaintTicks(true);
-		slider.setPaintLabels(true);
-		//ajout des labels positions sur le slider
-		Hashtable position = new Hashtable();
-		position.put(0, new JLabel("0"));
-		position.put(25, new JLabel("0.25"));
-		position.put(50, new JLabel("0.50"));
-		position.put(75, new JLabel("0.75"));
-		position.put(100, new JLabel("1"));
-		
-		slider.setLabelTable(position);
-		sliderP.add(slider);
-		menu.add(sliderP);*/
 
 		
 		panel.add(menu, BorderLayout.WEST);
-	//	area_Text.add(menu, BorderLayout.EAST);
-		
+
 		// Pour le panel text 
 		panel.add(area_Text, BorderLayout.EAST);
 		

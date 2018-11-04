@@ -18,11 +18,7 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		super(pgm, e, t, pallier, coef, meilleurCout);
 		
 	}
-	
-	public void initTemperature(){
-		
-	}
-	
+
 	public void run()
 	{
 		String info;
@@ -35,6 +31,7 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		int engen = 0;
 		int pos = 0;
 		
+		/*Calcul de la solution initial*/
 		Graph solutionactuelle;
 		solutionactuelle = super.generationSolutionInitiale(prog.getGraph());
 		
@@ -44,7 +41,9 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		info = "Température initial : " + this.temperature + " | coef : " + this.coef + " | energie : " + this.energie + " | cout de la solution initial : " + this.meilleurCout + "\n";
 		Interface.majAffichage(info);
 		
+		/*Condition d'arret du recuit*/
 		while(this.temperature >= 0.00005 && i < 5000){
+			/*Calcul de la solution après voisinage*/
 			Graph newsoluce = voisinage(solutionactuelle);
 			newe = newsoluce.cout();
 			diff = newe - this.energie;
@@ -53,11 +52,14 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 					+ " | pallier : " + this.pallier + " | coutvoisinage : " + newe;
 			Interface.majAffichage(info);
 			
+			/*Si la différence entre le cout de la nouvelle solution et la solution actuelle est inférieure à 0*/
 			if(diff < 0){
 				info = "\tSolution après voisinage meilleur. Acceptée";
 				Interface.majAffichage(info);
 				
+				/*On accepte la solution. On incrémente le compteur pour le pallier de temperature*/
 				compteur++;
+				/*Mis a jour de la temperature*/
 				if(compteur >= this.pallier){
 					this.temperature = (this.temperature * this.coef);
 					compteur = 0;
@@ -68,7 +70,6 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 				
 				if(newe < meilleurCout){
 					this.meilleurCout = newe;
-					//System.out.println("new meilleur cout : " + this.meilleurCout);
 				}
 				
 			} else {
@@ -76,12 +77,15 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 				Interface.majAffichage(info);
 				
 				engen++;
+				/*Calcul de la probabilite de gibbs boltzmann*/
 				proba = (float) Math.exp(-diff/this.temperature);
-					
+				
+				/*Si l'on tire un chiffre inferieur à la proba, alors on accepte le changement*/
 				if(Math.random() < proba){
 					info = "\tAcceptée";
 					pos++;
 					compteur++;
+					
 					if(compteur >= this.pallier){
 						this.temperature = (this.temperature * this.coef);
 						compteur = 0;
@@ -89,9 +93,9 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 					
 					solutionactuelle = newsoluce;
 					this.energie = newe;
+					
 					if(newe < meilleurCout){
 						this.meilleurCout = newe;
-						//System.out.println("new meilleur cout : " + this.meilleurCout);
 					}
 				} else {
 					info = "\tRefusée";
@@ -108,7 +112,7 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		
 	}
 	
-	/*Cette fonction execute la methode de voisinage, â€‹ parâ€‹ â€‹ dï¿½faut 2-opt*/
+	/*Cette fonction execute la methode de voisinage, par defaut 2-opt*/
 	public Graph voisinage(Graph graph) {
 		
 		Graph solution = new Graph();
@@ -143,7 +147,6 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 							
 							if(coutO > coutT){
 								
-								
 								int idip = ai.getSomA().getid();
 								int soma = j.getid();
 								ArrayList<Arc> larcinverse = new ArrayList<>();
@@ -175,13 +178,6 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 									a.setCout(prog.getGraph().getArcbyDA(a.getSomD().getid(), a.getSomA().getid()).getCout());
 								}
 								amelioration = true;
-								
-								/*System.out.println("AMELIORATION");
-								for(Arc a : solution.getArcs()){
-									System.out.println("Arc entre " + a.getSomD().getid() + " et " + a.getSomA().getid()
-									+ " | cout = " + a.getCout());
-									}
-									System.out.println("--------------------------------------------------");*/
 							}
 						}
 					}

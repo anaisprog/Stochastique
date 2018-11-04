@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import ilog.concert.*;
 import ilog.cplex.*;
 import modele.Arc;
-import modele.Graph;
 import modele.ProgrammeLineaire;
 import modele.Sommet;
 import vue.Interface;
@@ -48,7 +47,7 @@ public class Cplex {
 					cout[a.getSomD().getid()][a.getSomA().getid()] = a.getCout();
 				}
 				
-				/* Ajout des variables des chemins au model */
+				/* Ajout des variables des chemins a model */
 				for (int i = 1; i <= lsommet.size(); i++) {
 					for (int j = 1; j <= lsommet.size(); j++) {
 						if(i != j){

@@ -3,12 +3,12 @@ package modele;
 public class Sommet {
 	//Attributs membres
 	//ID du sommet : chaque sommet aura un ID unique
-	private static int cmpt=1; /*Cette variable sera attribuée a chaque sommet créée
-	et incrémenté par la suite*/
+	private static int cmpt=1; /*Cette variable sera attribuee a chaque sommet creee
+	et incremente par la suite*/
 	private int id;
-	//Coordonnée horizontale
+	//Coordonnee horizontale
 	private float x;
-	//Coordonnée verticale
+	//Coordonnee verticale
 	private float y;
 
 	
