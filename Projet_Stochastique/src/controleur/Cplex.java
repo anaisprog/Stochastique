@@ -8,6 +8,7 @@ import modele.Arc;
 import modele.Graph;
 import modele.ProgrammeLineaire;
 import modele.Sommet;
+import vue.Interface;
 
 public class Cplex {
 	private IloCplex model;
@@ -103,8 +104,8 @@ public class Cplex {
 	public void solve(){
 		try {
 			model.solve();
-			model.output().println("Solution status = " + model.getStatus());
-			model.output().println("Solution value  = " + model.getObjValue());
+			String info = "Solution status = " + model.getStatus() + "\nSolution value  = " + model.getObjValue();
+			Interface.majAffichage(info);
 		} catch (IloException e) {
 			e.printStackTrace();
 		}

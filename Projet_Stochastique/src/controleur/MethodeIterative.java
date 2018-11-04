@@ -11,6 +11,7 @@ import modele.Arc;
 import modele.Graph;
 import modele.ProgrammeLineaire;
 import modele.Sommet;
+import vue.Interface;
 
 public class MethodeIterative {
 	private ProgrammeLineaire prog;
@@ -25,12 +26,13 @@ public class MethodeIterative {
 		if (nature == 0) {
 			Cplex cplex = new Cplex(prog, nature);
 			boolean st;
-
+			String info;
 			do {
 				cplex.solve();
 
 				st = contrainteSousTour(cplex);
-				System.out.println("Contrainte de sous-tours ajouté au model");
+				info = "Contrainte de sous-tours ajouté au modèle";
+				Interface.majAffichage(info);
 			} while (st);
 		} else {
 
@@ -75,50 +77,55 @@ public class MethodeIterative {
 						alreadytreated.add(s.getid());
 
 						Arc ad = newsoluce.getArcbySommetD(s.getid());
-						Sommet so = ad.getSomA();
+						if (ad != null) {
+							Sommet so = ad.getSomA();
 
-						listeparcour.add(so.getid());
-						alreadytreated.add(so.getid());
+							listeparcour.add(so.getid());
+							alreadytreated.add(so.getid());
 
-						do {
-							ad = newsoluce.getArcbySommetD(so.getid());
-							so = ad.getSomA();
+							do {
+								ad = newsoluce.getArcbySommetD(so.getid());
+								if (ad != null) {
+									so = ad.getSomA();
 
-							if (so.getid() != s.getid()) {
-								listeparcour.add(so.getid());
-								alreadytreated.add(so.getid());
-							}
-						} while (so.getid() != s.getid());
+									if (so.getid() != s.getid()) {
+										listeparcour.add(so.getid());
+										alreadytreated.add(so.getid());
+									}
+								}
+							} while (so.getid() != s.getid() && ad != null);
 
-						if ((listeparcour.size()) != lsommet.size()) {
-							nbst++;
-							st = true;
-							System.out.println(listeparcour);
+							if ((listeparcour.size()) != lsommet.size()) {
+								nbst++;
+								st = true;
+								System.out.println(listeparcour);
 
-							IloLinearNumExpr cons = model.linearNumExpr();
+								IloLinearNumExpr cons = model.linearNumExpr();
 
-							for (int i = 0; i < listeparcour.size(); i++) {
-								int d = listeparcour.get(i).intValue();
-								int a;
+								for (int i = 0; i < listeparcour.size(); i++) {
+									int d = listeparcour.get(i).intValue();
+									int a;
 
-								if (i + 1 == listeparcour.size()) {
-									a = listeparcour.get(0).intValue();
-									
-								} else {
-									a = listeparcour.get(i + 1).intValue();
+									if (i + 1 == listeparcour.size()) {
+										a = listeparcour.get(0).intValue();
+
+									} else {
+										a = listeparcour.get(i + 1).intValue();
+									}
+
+									cons.addTerm(1.0, var[d][a]);
 								}
 
-								cons.addTerm(1.0, var[d][a]);
+								model.addLe(cons, listeparcour.size() - 1);
+
+								listeparcour.clear();
 							}
-
-							model.addLe(cons, listeparcour.size() - 1);
-
-							listeparcour.clear();
 						}
 					}
 					cplex.setModel(model);
 				}
-				System.out.println(nbst + " sous-tours détecté");
+				Interface.majAffichage(nbst + " sous-tours détecté");
+				
 			}
 		} catch (UnknownObjectException e) {
 			e.printStackTrace();
