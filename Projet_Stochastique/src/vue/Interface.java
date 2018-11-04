@@ -14,7 +14,6 @@ import javax.swing.border.CompoundBorder;
 
 import controleur.ParserXMLFile;
 import controleur.Solveur;
-import ilog.concert.IloException;
 import modele.Graph;
 import modele.ProgrammeLineaire;
 
@@ -28,7 +27,6 @@ public class Interface implements ActionListener{
 	private static JPanel panel;	
 	private static JPanel menu;
 	private static JPanel areaText;
-	private static JPanel affichageVille;
 	
 	
 	//radiobuttons
@@ -50,10 +48,16 @@ public class Interface implements ActionListener{
 	    frame.setPreferredSize(new Dimension(1000, 600));
 	    panel = new JPanel(new BorderLayout());
 	    areaText = new JPanel(new BorderLayout());
+	    JTextArea area_Text = new JTextArea(6, 6);
+	    
+	   
 		
 	    //Creation du menu 
-	    menu = new JPanel();
+	    menu = new JPanel(new GridLayout(1, 0));
 		menu.setPreferredSize(new Dimension(300, 500));
+		JPanel second = new JPanel(new GridLayout(0, 1));
+		second.add(area_Text);
+
 		menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
 		
 		
@@ -85,17 +89,9 @@ public class Interface implements ActionListener{
 				   
 				   ParserXMLFile parser = new ParserXMLFile();
 				   Graph graph = parser.parse(filename);
-				   if(graph != null)
-				   {
+				   if(graph != null){
 					   prog = new ProgrammeLineaire();
 					   prog.setGraph(graph);
-					   
-					   /*Affichage des villes sur l'interface
-					   affichageVille = new VilleInterface();
-					   ((VilleInterface) affichageVille).setSonGraphe(graph);
-					   affichageVille.setPreferredSize(new Dimension(500, 500));
-					   panel.add(affichageVille, BorderLayout.EAST);*/
-					   
 				   } else {
 					   JOptionPane.showMessageDialog(panel, "Format de fichier non valide", "Attention",
 						        JOptionPane.WARNING_MESSAGE);
@@ -180,6 +176,7 @@ public class Interface implements ActionListener{
 		menu.add(algorithme);
 		menu.add(resolution);
 		menu.add(new JSeparator(JSeparator.HORIZONTAL));
+		menu.add(second);
 		
 		start = new JButton("Lancer");
         start.addActionListener(new ActionListener(){
@@ -203,12 +200,7 @@ public class Interface implements ActionListener{
 				}
 				
 				Solveur solv = new Solveur(algochoice, nature, prog);
-				try {
-					solv.run();
-				} catch (IloException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				solv.run();
 			}
         	
         });
@@ -222,6 +214,8 @@ public class Interface implements ActionListener{
         	
         });
         
+		
+		
 		
 		
 		JPanel sliderP = new JPanel(new GridLayout(0, 1));
@@ -247,29 +241,23 @@ public class Interface implements ActionListener{
 
 		
 		panel.add(menu, BorderLayout.WEST);
-		
-		// Representation des villes
-		
+	//	area_Text.add(menu, BorderLayout.EAST);
 		
 		// Pour le panel text 
-		//areaText.add(menu, BorderLayout.EAST);
+		menu.add(area_Text, BorderLayout.WEST);
 		
 		frame.add(panel);
 		frame.pack();
 		frame.setVisible(true);
 		
+		areaText.setVisible(true);
 		JPanel choice = new JPanel();
 		choice.setLayout(new BoxLayout(choice, BoxLayout.X_AXIS));
 		
 		choice.add(start);
 		choice.add(stop);
-		menu.add(choice);
-		
-		
+		menu.add(choice);	
 	}
-	
-	
-
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
