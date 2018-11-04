@@ -83,7 +83,6 @@ public class Graph {
 		for(Arc a : arcs){
 			cout += a.getCout();
 		}
-		
 		return cout;
 	}
 }
