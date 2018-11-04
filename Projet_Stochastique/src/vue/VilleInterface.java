@@ -21,22 +21,42 @@ public class VilleInterface extends JPanel implements MouseMotionListener, Compo
 
 		private static final long serialVersionUID = 1L;
 		private Rectangle.Double tailleFenetre = new Rectangle.Double();
-		private ArrayList<Sommet> positionVillesInterface;
+		private ArrayList<Sommet> positionVilles;
 		private Graph sonGraphe;
 		
 		
-		public VilleInterface()
+		public VilleInterface(Graph graphe)
 		{
-			positionVillesInterface = new ArrayList<Sommet>(); //Cette liste contient les positions "affichables" des villes
+			sonGraphe = graphe;
+			positionVilles = new ArrayList<Sommet>(); 
+
+			
+			this.setBordsFenetre();
 			addComponentListener(this);
 			addMouseMotionListener(this);
 		}
 		
 		
+		// Fonction permettant de calculer les positions a partir des couts des arcs
+		
+		public void positionParCouts(Graph g) {
+			ArrayList<Arc> lArcs= g.getArcs();
+			
+			for(Sommet s:g.getSommets()) {
+				
+			}
+			
+			
+		}
+		
+		
+	
+		
+		
 		public void positionsAccordingScreen() 
 		{
-			//On reinitialise la liste
-			positionVillesInterface.clear();
+			// La liste est initialisee 
+			positionVilles.clear();
 
 			//On recupere la taille maximale du panel
 			float tailleMax = (this.getWidth() > this.getHeight()) ? this.getHeight() : this.getWidth();
@@ -44,21 +64,23 @@ public class VilleInterface extends JPanel implements MouseMotionListener, Compo
 			double coef = tailleMax / (tailleFenetre.height > tailleFenetre.width ? tailleFenetre.height : tailleFenetre.width);
 			//On adapte les positions de chaque ville afin de les rendre modulable a la fenetre
 			//Pour ca on recupere les villes
-			//On parcourt donc la liste d'arcs et recupere la ville de depart et d'arrive
+			//On parcourt donc la liste d'arcs et recupere la ville de depart et d'arrivee
+			
+			
+			
 			int index = 0;
 			for (Arc a : sonGraphe.getArcs()) 
 			{
-				
 				//si c'est le premier arc : on ajoute les deux villes
 				if(index == 0)
 				{
-					positionVillesInterface.add(new Sommet(((float)((a.getSomD().getx() - tailleFenetre.x) * coef)), ((float) ((a.getSomD().gety() - tailleFenetre.y) * coef))));
-					positionVillesInterface.add(new Sommet(((float)((a.getSomA().getx() - tailleFenetre.x) * coef)), ((float) ((a.getSomA().gety() - tailleFenetre.y) * coef))));
+					positionVilles.add(new Sommet(((float)((a.getSomD().getx() - tailleFenetre.x) * coef)), ((float) ((a.getSomD().gety() - tailleFenetre.y) * coef))));
+					positionVilles.add(new Sommet(((float)((a.getSomA().getx() - tailleFenetre.x) * coef)), ((float) ((a.getSomA().gety() - tailleFenetre.y) * coef))));
 				}
 				//Sinon on prend que la ville d'arrivee, celle de depart ayant deja ete enregistree
 				else
 				{
-					positionVillesInterface.add(new Sommet(((float)((a.getSomA().getx() - tailleFenetre.x) * coef)), ((float) ((a.getSomA().gety() - tailleFenetre.y) * coef))));
+					positionVilles.add(new Sommet(((float)((a.getSomA().getx() - tailleFenetre.x) * coef)), ((float) ((a.getSomA().gety() - tailleFenetre.y) * coef))));
 				}
 				
 				index++;
@@ -71,7 +93,8 @@ public class VilleInterface extends JPanel implements MouseMotionListener, Compo
 		{
 			Sommet villeMin = new Sommet(sonGraphe.getSommets().get(0).getx(), sonGraphe.getSommets().get(0).gety());
 			Sommet villeMax = new Sommet(sonGraphe.getSommets().get(0).getx(), sonGraphe.getSommets().get(0).gety());
-
+			
+			
 			for (Sommet s : sonGraphe.getSommets()) 
 			{
 				if (s.getx() < villeMin.getx()) 
@@ -111,7 +134,7 @@ public class VilleInterface extends JPanel implements MouseMotionListener, Compo
 			g.setColor(Color.RED);
 			
 			// Affichage des villes
-			for (Sommet s : positionVillesInterface) {
+			for (Sommet s : positionVilles) {
 				g.fillRect((int) s.getx(), (int) s.gety(), 4, 4);
 			}
 			
@@ -125,8 +148,8 @@ public class VilleInterface extends JPanel implements MouseMotionListener, Compo
 			int nbArc = sonGraphe.getArcs().size();
 			for (int i = 0; i < nbArc; i++) 
 			{
-				Sommet debut = positionVillesInterface.get(i);
-				Sommet fin = positionVillesInterface.get(i+1);
+				Sommet debut = positionVilles.get(i);
+				Sommet fin = positionVilles.get(i+1);
 				g.drawLine((int)debut.getx() + 2, (int)debut.gety() + 2, (int)fin.getx() + 2, (int)fin.gety() + 2);	
 			}
 
@@ -176,11 +199,4 @@ public class VilleInterface extends JPanel implements MouseMotionListener, Compo
 		}
 	
 
-		public void setSonGraphe(Graph graphe) 
-		{
-			this.sonGraphe = graphe;		
-			setBordsFenetre();
-			positionsAccordingScreen();
-			repaint();
-		}
 }
