@@ -103,7 +103,7 @@ public class MethodeIterative {
 
 								if (i + 1 == listeparcour.size()) {
 									a = listeparcour.get(0).intValue();
-									;
+									
 								} else {
 									a = listeparcour.get(i + 1).intValue();
 								}
