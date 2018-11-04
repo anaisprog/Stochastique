@@ -48,7 +48,7 @@ public class Interface implements ActionListener{
 	    frame.setPreferredSize(new Dimension(1000, 600));
 	    panel = new JPanel(new BorderLayout());
 	    areaText = new JPanel(new BorderLayout());
-	    JTextArea area_Text = new JTextArea(6, 6);
+	    JTextArea area_Text = new JTextArea(20, 60);
 	    
 	   
 		
@@ -217,7 +217,7 @@ public class Interface implements ActionListener{
 		
 		
 		
-		
+	/*	
 		JPanel sliderP = new JPanel(new GridLayout(0, 1));
 		Border borderSlid = BorderFactory.createTitledBorder("Taux acceptation de la temperature");
 		sliderP.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0), borderSlid));
@@ -237,14 +237,14 @@ public class Interface implements ActionListener{
 		
 		slider.setLabelTable(position);
 		sliderP.add(slider);
-		menu.add(sliderP);
+		menu.add(sliderP);*/
 
 		
 		panel.add(menu, BorderLayout.WEST);
 	//	area_Text.add(menu, BorderLayout.EAST);
 		
 		// Pour le panel text 
-		menu.add(area_Text, BorderLayout.WEST);
+		panel.add(area_Text, BorderLayout.EAST);
 		
 		frame.add(panel);
 		frame.pack();
