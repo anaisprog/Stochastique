@@ -86,9 +86,12 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 				Arc ai= solution.getArcbySommetD(s.getid());
 				Arc aim = solution.getArcbySommetA(s.getid());
 				for(Sommet so:lsommets) {
+					/*Condition j != i*/
 					if(so.getid()!=s.getid()) {
 						Arc aj= solution.getArcbySommetD(so.getid());
 						Arc ajm = solution.getArcbySommetA(so.getid());
+						
+						/*Condition j != i+1 && j != i-1*/
 						if((so.getid()!=ai.getSomA().getid()) && (aim.getSomD().getid())!=(so.getid())) {
 							
 						}
