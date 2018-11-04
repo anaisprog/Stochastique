@@ -24,18 +24,20 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		int newe = 0;
 		int compteur = 0;
 		float proba = 0;
+		Graph solutionactuelle;
+		solutionactuelle = super.generationSolutionInitiale(prog.getGraph());
 		
-		this.energie = super.generationSolutionInitiale(prog.getGraph()).cout();
+		this.energie = solutionactuelle.cout();
 		
 		
 		while(this.temperature >= 0.00005 && i < 5000){
 			//TODO : finir methode voisinage
-			Graph newsoluce = voisinage(super.generationSolutionInitiale(prog.getGraph()));
+			Graph newsoluce = voisinage(solutionactuelle);
 			newe = newsoluce.cout();
 			diff = newe - this.energie;
 
-			/*System.out.println(energie);
-			System.out.println(newe);*/
+			/*System.out.println("COUT BASE : " + energie);
+			System.out.println("COUT NEW : " + newe);*/
 
 			if(diff < 0){
 				compteur++;
@@ -43,7 +45,8 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 					this.temperature = (this.temperature * this.coef);
 					compteur = 0;
 				}
-					
+				
+				solutionactuelle = newsoluce;
 				this.energie = newe;
 				
 				if(newe < meilleurCout)
@@ -58,7 +61,8 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 						this.temperature = (this.temperature * this.coef);
 						compteur = 0;
 					}
-						
+					
+					solutionactuelle = newsoluce;
 					this.energie = newe;
 					if(newe < meilleurCout)
 						this.meilleurCout = newe;
@@ -67,43 +71,45 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		}
 	}
 	
-	/*Cette fonction execute la methode de voisinage, ​ par​ ​ défaut 2-opt*/
+	/*Cette fonction execute la methode de voisinage, ​ par​ ​ d�faut 2-opt*/
 	public Graph voisinage(Graph graph) {
 		Graph solution=graph;
 		ArrayList<Arc> larcs = graph.getArcs();
 	
 		boolean amelioration = true;
-		double distance_i_ip1=0;
-		double distance_j_jp1=0;
-		double distance_i_j=0;
-		double distance_ip1_jp1=0;
 
 		ArrayList<Sommet> lsommets = solution.getSommets();
-		while(amelioration==true) {
-			amelioration=false;
-			for(Sommet s:lsommets)
-			{	
-				Arc ai= solution.getArcbySommetD(s.getid());
-				Arc aim = solution.getArcbySommetA(s.getid());
-				for(Sommet so:lsommets) {
+		while(amelioration == true) {
+			amelioration = false;
+			
+			for(Sommet i : lsommets){	
+				Arc ai = solution.getArcbySommetD(i.getid());
+				Arc aim = solution.getArcbySommetA(i.getid());
+				
+				for(Sommet j : lsommets) {
 					/*Condition j != i*/
-					if(so.getid()!=s.getid()) {
-						Arc aj= solution.getArcbySommetD(so.getid());
-						Arc ajm = solution.getArcbySommetA(so.getid());
+					if(j.getid() != i.getid()) {
+						Arc aj = solution.getArcbySommetD(j.getid());
 						
 						/*Condition j != i+1 && j != i-1*/
-						if((so.getid()!=ai.getSomA().getid()) && (aim.getSomD().getid())!=(so.getid())) {
+						if((j.getid() != ai.getSomA().getid()) && (aim.getSomD().getid()) != (j.getid())) {
+							Arc aij = super.prog.getGraph().getArcbyDA(i.getid(), j.getid());
+							Arc aipjp = super.prog.getGraph().getArcbyDA(ai.getSomA().getid(), aj.getSomA().getid());
 							
+							double coutO = ai.getCout() + aj.getCout();
+							double coutT = aij.getCout() + aipjp.getCout();
+							
+							if(coutO > coutT){
+								solution.getArcbySommetD(i.getid()).setSomA(j);
+								solution.getArcbySommetD(j.getid()).setSomD(ai.getSomA());
+								
+								amelioration = true;
+							}
 						}
-					}
-					
+					}	
 				}
-						
-			
 			}
 		}
-			
 		return solution;
 	}
-	
 }

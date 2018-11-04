@@ -62,7 +62,7 @@ public class RecuitSimuleGenerique {
 	}
 
 
-	/*Lance le calcul de la solution avec l'algorithme du recuit simulï¿½*/
+	/*Lance le calcul de la solution avec l'algorithme du recuit simulé*/
 	public void run(int nature){
 		if(nature == 0){
 			RecuitSimuleDeterministe rsd = new RecuitSimuleDeterministe(prog);
