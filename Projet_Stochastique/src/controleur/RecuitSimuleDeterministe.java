@@ -102,7 +102,7 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 			
 			i++;
 		}
-		
+		System.out.println("Meilleur cout final : " + this.meilleurCout);
 		info = "Meilleur cout final calculé : " + this.meilleurCout;
 		Interface.majAffichage(info);
 		

@@ -66,7 +66,13 @@ public class MethodeIterative {
 						}
 					}
 				}
-
+				
+				ArrayList<Arc> larc = newsoluce.getArcs();
+				
+				for(Arc a : larc){
+					
+				}
+				
 				ArrayList<Integer> alreadytreated = new ArrayList<>();
 				for (Sommet s : lsommet) {
 
@@ -139,11 +145,9 @@ public class MethodeIterative {
 	private boolean contain(ArrayList<Integer> lint, int id) {
 		for (Integer i : lint) {
 			if (id == i.intValue()) {
-
 				return true;
 			}
 		}
-
 		return false;
 	}
 }
