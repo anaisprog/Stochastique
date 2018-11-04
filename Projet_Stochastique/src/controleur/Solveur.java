@@ -2,12 +2,12 @@ package controleur;
 
 import ilog.concert.IloException;
 import modele.ProgrammeLineaire;
+import vue.Interface;
 
 public class Solveur {
 	int algochoice; /*attribut permettant d'identifier quel algorithme*/
 	int nature; /*type de probl�me l’utilisateur souhaite r�soudre*/
 	ProgrammeLineaire prog;
-	
 	
 	/*Constructeur de la classe Solver prenant
 	en paramètre un objet ProgrammeLineaire*/
@@ -27,5 +27,9 @@ public class Solveur {
 			MethodeIterative mi = new MethodeIterative(prog, nature);
 			mi.run();
 		}
+	}
+	
+	public void majInterface(String info){
+		
 	}
 }

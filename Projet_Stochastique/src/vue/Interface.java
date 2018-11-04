@@ -14,10 +14,11 @@ import javax.swing.border.CompoundBorder;
 
 import controleur.ParserXMLFile;
 import controleur.Solveur;
+import ilog.concert.IloException;
 import modele.Graph;
 import modele.ProgrammeLineaire;
 
-public class Interface implements ActionListener{
+public abstract class Interface implements ActionListener {
 
 	private static JButton charger;
 	private static JButton start;
@@ -35,11 +36,14 @@ public class Interface implements ActionListener{
 	private static JRadioButton stochastique;
 	private static JRadioButton deterministe;
  	
-	int algochoice = -1;
-	int nature = -1;
-	private ProgrammeLineaire prog;
+	private static JTextArea area_Text;
+	private static JScrollPane scroll;
 	
-	public void createJFrame() {
+	static int algochoice = -1;
+	static int nature = -1;
+	private static ProgrammeLineaire prog;
+	
+	public static void createJFrame() {
 
 		System.out.println("Creation de l'interface graphique");
 
@@ -48,15 +52,15 @@ public class Interface implements ActionListener{
 	    frame.setPreferredSize(new Dimension(1000, 600));
 	    panel = new JPanel(new BorderLayout());
 	    areaText = new JPanel(new BorderLayout());
-	    JTextArea area_Text = new JTextArea(20, 60);
-	    
+	    area_Text = new JTextArea(20, 60);
+	    scroll = new JScrollPane(area_Text);
 	   
 		
 	    //Creation du menu 
 	    menu = new JPanel(new GridLayout(1, 0));
 		menu.setPreferredSize(new Dimension(300, 500));
 		JPanel second = new JPanel(new GridLayout(0, 1));
-		second.add(area_Text);
+		second.add(scroll);
 
 		menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
 		
@@ -65,7 +69,6 @@ public class Interface implements ActionListener{
 		areaText.setPreferredSize(new Dimension(300, 500));
 
 		
-	    
 		//Realisation du chargement des villes
 		JPanel firstBox = new JPanel(new GridLayout(0, 1));
 		Border borderDonnees = BorderFactory.createTitledBorder("Donnees");
@@ -138,10 +141,9 @@ public class Interface implements ActionListener{
 		algorithme.add(recuitSimule);	
 		algorithme.setMaximumSize(dimension);
 		
-		
-		//Radio Buttons pour le type du problÃ¨me 
+		//Radio Buttons pour le type du problème 
 		JPanel resolution = new JPanel(new GridLayout(5, 1));
-		Border border2 = BorderFactory.createTitledBorder("Choix type de rÃ©solution");
+		Border border2 = BorderFactory.createTitledBorder("Choix type de résolution");
 		resolution.setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0), border2));
 
 		deterministe = new JRadioButton("Deterministe");
@@ -185,22 +187,28 @@ public class Interface implements ActionListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(algochoice == -1){
-					JOptionPane.showMessageDialog(panel, "Veuillez choisir l'algorithme de rÃ©solution", "Attention",
+					JOptionPane.showMessageDialog(panel, "Veuillez choisir l'algorithme de résolution", "Attention",
 					        JOptionPane.WARNING_MESSAGE);
 				}
 				
 				if(nature == -1){
-					JOptionPane.showMessageDialog(panel, "Veuillez choisir la nature du problÃ¨me", "Attention",
+					JOptionPane.showMessageDialog(panel, "Veuillez choisir la nature du problème", "Attention",
 					        JOptionPane.WARNING_MESSAGE);
 				}
 				
 				if(prog == null){
-					JOptionPane.showMessageDialog(panel, "Aucun fichier de donnÃ©es chargÃ©", "Attention",
+					JOptionPane.showMessageDialog(panel, "Aucun fichier de données chargé", "Attention",
 					        JOptionPane.WARNING_MESSAGE);
 				}
 				
 				Solveur solv = new Solveur(algochoice, nature, prog);
-				solv.run();
+				
+				try {
+					solv.run();
+				} catch (IloException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
         	
         });
@@ -265,10 +273,12 @@ public class Interface implements ActionListener{
 		
 	}
 	
-	public static void main(String[] args) {
-		Interface i = new Interface();
-		i.createJFrame();
+	public static void majAffichage(String info){
+		String txtbase = Interface.area_Text.getText();
+		Interface.area_Text.setText(txtbase + "\n" + info);
 	}
-
-
+	
+	public static void main(String[] args) {
+		Interface.createJFrame();
+	}
 }

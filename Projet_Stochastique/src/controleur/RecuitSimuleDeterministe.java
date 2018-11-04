@@ -6,6 +6,7 @@ import modele.Arc;
 import modele.Graph;
 import modele.ProgrammeLineaire;
 import modele.Sommet;
+import vue.Interface;
 
 public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 
@@ -24,6 +25,7 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 	
 	public void run()
 	{
+		String info;
 		int diff = 0;
 		int i = 0;
 		int newe = 0;
@@ -39,13 +41,22 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 		this.energie = solutionactuelle.cout();
 		this.meilleurCout = energie;
 		
+		info = "Température initial : " + this.temperature + " | coef : " + this.coef + " | energie : " + this.energie + " | cout de la solution initial : " + this.meilleurCout + "\n";
+		Interface.majAffichage(info);
+		
 		while(this.temperature >= 0.00005 && i < 5000){
-			
 			Graph newsoluce = voisinage(solutionactuelle);
 			newe = newsoluce.cout();
 			diff = newe - this.energie;
-
+			
+			info = i + " | cout : " + this.energie + " | meilleurcout : " + this.meilleurCout + " | température : " + this.temperature
+					+ " | pallier : " + this.pallier + " | coutvoisinage : " + newe;
+			Interface.majAffichage(info);
+			
 			if(diff < 0){
+				info = "\tSolution après voisinage meilleur. Acceptée";
+				Interface.majAffichage(info);
+				
 				compteur++;
 				if(compteur >= this.pallier){
 					this.temperature = (this.temperature * this.coef);
@@ -57,14 +68,18 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 				
 				if(newe < meilleurCout){
 					this.meilleurCout = newe;
-					System.out.println("new meilleur cout : " + this.meilleurCout);
+					//System.out.println("new meilleur cout : " + this.meilleurCout);
 				}
 				
 			} else {
+				info = "\tSolution après voisinage moins bonne. Calcul de la probabilité de gibbs boltzmann";
+				Interface.majAffichage(info);
+				
 				engen++;
 				proba = (float) Math.exp(-diff/this.temperature);
 					
 				if(Math.random() < proba){
+					info = "\tAcceptée";
 					pos++;
 					compteur++;
 					if(compteur >= this.pallier){
@@ -76,20 +91,20 @@ public class RecuitSimuleDeterministe extends RecuitSimuleGenerique {
 					this.energie = newe;
 					if(newe < meilleurCout){
 						this.meilleurCout = newe;
-						System.out.println("new meilleur cout : " + this.meilleurCout);
+						//System.out.println("new meilleur cout : " + this.meilleurCout);
 					}
-				}	
+				} else {
+					info = "\tRefusée";
+				}
+				
+				Interface.majAffichage(info);
 			}
+			
 			i++;
 		}
 		
-		System.out.println("MEILLEUR COUT FINAL : " + this.meilleurCout);
-		System.out.println("pos : " + pos + " | engen : " + engen);
-		
-		if((pos/engen) > 0.95){
-			this.temperature = this.temperature / 2;
-			run();
-		}
+		info = "Meilleur cout final calculé : " + this.meilleurCout;
+		Interface.majAffichage(info);
 		
 	}
 	
