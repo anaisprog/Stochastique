@@ -245,8 +245,8 @@ public abstract class Interface implements ActionListener {
 	}
 	
 	public static void majAffichage(String info){
-		String txtbase = Interface.area_Text.getText();
-		Interface.area_Text.setText(txtbase + "\n" + info);
+		//String txtbase = Interface.area_Text.getText();
+		Interface.area_Text.setText("\n" + info);
 	}
 	
 	public static void main(String[] args) {

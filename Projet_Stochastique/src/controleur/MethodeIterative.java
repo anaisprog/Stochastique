@@ -29,8 +29,9 @@ public class MethodeIterative {
 		
 		//Instancie la classe Cplex avec le programme lineaire et la nature
 		Cplex cplex = new Cplex(prog, nature);
-		boolean st;
+		boolean st = false;
 		String info;
+		int i = 0;
 		
 		/*Tant que l'on a des sous tours dans le modèle*/
 		do {
@@ -41,7 +42,8 @@ public class MethodeIterative {
 			st = contrainteSousTour(cplex);
 			info = "Contrainte de sous-tours ajouté au modèle";
 			Interface.majAffichage(info);
-		} while (st);
+			i++;
+		} while (st && i!= 5);
 
 	}
 	
